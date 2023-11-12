@@ -7,12 +7,15 @@ const Task = require('./Routers/Task');
 const Schedule = require('./Routers/Schedule');
 const File = require('./Routers/File');
 const Announcement = require('./Routers/Announcement');
+const { createServer } = require('http'); // Import the createServer function from the http module
 const { Server } = require('socket.io');
 
 require("dotenv").config()
 
 const app = express()
-const io = new Server(app);
+
+const server = createServer(app); // Create an HTTP server and pass it the Express app
+const io = new Server(server); // Attach Socket.IO to the HTTP server
 
 app.use(express.json());
 app.use(cors());
@@ -29,7 +32,7 @@ io.on('connection', (socket) => {
 });
 
 mongoose.connect(process.env.MONGO_URI).then(() => {
-  app.listen(process.env.PORT, () => {
+  server.listen(process.env.PORT, () => {
     console.log(`Connected to the database and listening on port ${process.env.PORT}`);
   });
 });

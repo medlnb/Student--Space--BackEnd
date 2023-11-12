@@ -7,10 +7,12 @@ const Task = require('./Routers/Task');
 const Schedule = require('./Routers/Schedule');
 const File = require('./Routers/File');
 const Announcement = require('./Routers/Announcement');
+const { Server } = require('socket.io');
 
-require("dotenv").config();
+require("dotenv").config()
 
-const app = express();
+const app = express()
+const io = new Server(app);
 
 app.use(express.json());
 app.use(cors());
@@ -22,6 +24,9 @@ app.use("/api/schedule", Schedule);
 app.use("/api/file", File);
 app.use("/api/announcement", Announcement);
 
+io.on('connection', (socket) => {
+  console.log('a user connected');
+});
 
 mongoose.connect(process.env.MONGO_URI).then(() => {
   app.listen(process.env.PORT, () => {

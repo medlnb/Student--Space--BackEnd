@@ -7,19 +7,19 @@ const Task = require('./Routers/Task')
 const Schedule = require('./Routers/Schedule')
 const File = require('./Routers/File')
 const Announcement = require('./Routers/Announcement')
-const { Server } = require('socket.io')
-const {createServer} = require("http")
+// const { Server } = require('socket.io')
+// const {createServer} = require("http")
 
 require("dotenv").config()
 
 const app = express()
 
-const httpServer = createServer()
-const io = new Server(httpServer, {
-  cors: {
-    origin:"*",
-  },
-})
+// const httpServer = createServer()
+// const io = new Server(httpServer, {
+//   cors: {
+//     origin:"*",
+//   },
+// })
 
 app.use(express.json())
 app.use(cors())
@@ -32,14 +32,14 @@ app.use("/api/schedule", Schedule)
 app.use("/api/file", File)
 app.use("/api/announcement", Announcement)
 
-io.on('connection', (socket) => {
+// io.on('connection', (socket) => {
   
   
-  socket.on("msg", (data) => {
-    io.emit("NewNotification", data)
-  })
+//   socket.on("msg", (data) => {
+//     io.emit("NewNotification", data)
+//   })
   
-})
+// })
 
 mongoose.connect(process.env.MONGO_URI).then(() => {
   app.listen(process.env.PORT, () => {
@@ -47,6 +47,6 @@ mongoose.connect(process.env.MONGO_URI).then(() => {
   })
 })
 
-httpServer.listen(3001, () => {
-  console.log("listening to 3001")
-})
+// httpServer.listen(3001, () => {
+//   console.log("listening to 3001")
+// })

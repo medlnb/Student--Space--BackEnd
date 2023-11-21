@@ -11,6 +11,9 @@ const TaskSchema = new Schema({
     type: String,
     required: true
   },
+  Description: {
+    type: String,
+  },
   deadLine: {
     type: Object,
     required: true

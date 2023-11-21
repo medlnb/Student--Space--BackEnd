@@ -29,8 +29,8 @@ const getTasks = async (req, res) => {
 }
 
 const createTask = async (req, res) => {
-  const { className, taskTitle, deadLine } = req.body
-  const task = await Task.create({ className, taskTitle, deadLine })
+  const { className, taskTitle, deadLine,Description } = req.body
+  const task = await Task.create({ className, taskTitle, deadLine ,Description})
 
   if (!task)
     return res.status(402).json({ err: "Error creating a task" })

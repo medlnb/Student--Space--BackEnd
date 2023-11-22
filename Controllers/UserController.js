@@ -8,12 +8,12 @@ const createToken = (_id) => {
 const login = async (req, res) => {
   const {email,password} = req.body
   const modules = [
-    {teacher: "Dr. Aiadi Oussama",module:"Image Numérique"},
-    {teacher: "Dr. Bouanane.K",module: "Statistics for Data Science"},
-    {teacher: "Dr. Khaldi.An",module: "Programming for Data Science"},
-    {teacher: "Dr. Khaldi.B",module: "Data exploration and visualization"},
-    {teacher: "Dr. Bouanane.K",module: "Mathematics for Machine Learning 1"},
-    {teacher: "Dr. Chabbi selma",module: "English" }]
+    {teacher: ["Dr. Aiadi Oussama"],module:"Image Numérique"},
+    {teacher: ["Dr. Bouanane.K","Dr. Dokkar.Besma"],module: "Statistics for Data Science"},
+    {teacher: ["Dr. Khaldi.An","Dr. Khaldi.B"],module: "Programming for Data Science"},
+    {teacher: ["Dr. Khaldi.B"],module: "Data exploration and visualization"},
+    {teacher: ["Dr. Bouanane.K","Dr. Dokkar.Besma"],module: "Mathematics for Machine Learning 1"},
+    {teacher: ["Dr. Chabbi selma"],module: "English" }]
   
   let isTeacher = null
   modules.map(mdl => {

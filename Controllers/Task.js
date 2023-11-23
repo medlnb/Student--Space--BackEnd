@@ -25,12 +25,12 @@ const getTasks = async (req, res) => {
 
   const newTasks = Tasks.filter(task => calculateTimeLeft(task.deadLine))
 
-  return res.status(201).json(newTasks )
+  return res.status(201).json(newTasks)
 }
 
 const createTask = async (req, res) => {
-  const { className, taskTitle, deadLine,Description } = req.body
-  const task = await Task.create({ className, taskTitle, deadLine ,Description})
+  const { className, taskTitle, deadLine,Description,Link } = req.body
+  const task = await Task.create({ className, taskTitle, deadLine ,Description,Link})
 
   if (!task)
     return res.status(402).json({ err: "Error creating a task" })

@@ -16,7 +16,7 @@ const app = express()
 
 const httpServer = createServer()
 httpServer.use(cors())
-const io = new Server(httpServer)
+// const io = new Server(httpServer)
 
 app.use(express.json())
 app.use(cors())

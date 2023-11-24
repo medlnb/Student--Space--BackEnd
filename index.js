@@ -8,6 +8,7 @@ const Schedule = require('./Routers/Schedule')
 const File = require('./Routers/File')
 const Announcement = require('./Routers/Announcement')
 const { Server } = require('socket.io')
+const http = require("http")
 
 require("dotenv").config()
 
@@ -26,11 +27,7 @@ app.use("/api/schedule", Schedule)
 app.use("/api/file", File)
 app.use("/api/announcement", Announcement)
 
-const io = new Server(3001, {
-  cors: {
-    origin:"*"
-  }
-})
+
 
 mongoose.connect(process.env.MONGO_URI).then(() => {
   app.listen(process.env.PORT, () => {
@@ -38,7 +35,22 @@ mongoose.connect(process.env.MONGO_URI).then(() => {
   })
 })
 
-// httpServer.listen(3001, () => {
-//   console.log("listening to 3001")
-// })
+const server = http.createServer(app);
 
+const sio = require("socket.io")(server, {
+    handlePreflightRequest: (req, res) => {
+        const headers = {
+            "Access-Control-Allow-Headers": "Content-Type, Authorization",
+            "Access-Control-Allow-Origin": req.headers.origin, //or the specific origin you want to give access to,
+            "Access-Control-Allow-Credentials": true
+        };
+        res.writeHead(200, headers);
+        res.end();
+    }
+});
+
+sio.on("connection", () => {
+    console.log("Connected!");
+});
+
+server.listen(3000);

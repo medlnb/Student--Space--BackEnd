@@ -1,4 +1,3 @@
-// index.js
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
@@ -8,7 +7,7 @@ const Task = require('./Routers/Task');
 const Schedule = require('./Routers/Schedule');
 const File = require('./Routers/File');
 const Announcement = require('./Routers/Announcement');
-const io = require('./socket'); // Import the io object from socket.js
+const io = require('./socket');
 
 require('dotenv').config();
 

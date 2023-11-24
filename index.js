@@ -6,7 +6,7 @@ const Student = require('./Routers/Student')
 const Task = require('./Routers/Task')
 const Schedule = require('./Routers/Schedule')
 const File = require('./Routers/File')
-const Announcement = require('./Routers/Announcement')
+
 
 require("dotenv").config()
 
@@ -21,6 +21,7 @@ app.use("/api/student", Student)
 app.use("/api/task", Task)
 app.use("/api/schedule", Schedule)
 app.use("/api/file", File)
+const Announcement = require('./Routers/Announcement')
 app.use("/api/announcement", Announcement)
 
 

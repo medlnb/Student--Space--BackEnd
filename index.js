@@ -7,7 +7,6 @@ const Task = require('./Routers/Task');
 const Schedule = require('./Routers/Schedule');
 const File = require('./Routers/File');
 const Announcement = require('./Routers/Announcement');
-const io = require('./socket');
 
 require('dotenv').config();
 

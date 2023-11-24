@@ -20,4 +20,4 @@ sio.on("connection", () => {
 
 server.listen(3001);
 
-module.exports = io;
+module.exports = sio;

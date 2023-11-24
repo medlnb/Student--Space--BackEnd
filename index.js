@@ -13,14 +13,14 @@ const {createServer} = require("http")
 require("dotenv").config()
 
 const app = express()
+
 const httpServer = createServer()
 httpServer.use(cors())
-
-const io = require("socket.io")(httpServer);
-
+const io = new Server(httpServer)
 
 app.use(express.json())
 app.use(cors())
+
 
 app.use("/api/user", Authrouter)
 app.use("/api/student", Student)

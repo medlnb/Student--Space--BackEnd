@@ -1,5 +1,5 @@
 const Announcement = require("../Models/Announcement")
-
+const io = require('../socket');
 
 const CreateAnnouncement = async (req, res) => {
   const { Publisher, Content } = req.body
@@ -10,6 +10,9 @@ const CreateAnnouncement = async (req, res) => {
   if (!announcement)
     return res.status(404).json({ err: "Error Creating the Announcement" })
   
+  io.on('connection', (socket) => {
+    socket.emit("NewNotification","hello")
+  })
   return res.status(201).json(announcement)
 }
 

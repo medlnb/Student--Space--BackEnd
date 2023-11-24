@@ -1,5 +1,5 @@
 const Announcement = require("../Models/Announcement")
-
+const nodemailer = require('nodemailer')
 
 const CreateAnnouncement = async (req, res) => {
   const { Publisher, Content } = req.body
@@ -9,6 +9,32 @@ const CreateAnnouncement = async (req, res) => {
 
   if (!announcement)
     return res.status(404).json({ err: "Error Creating the Announcement" })
+  
+  
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'mohamedlanabi0@gmail.com',
+      pass: "rddv gnyx ptrd qtkl",
+    },
+  });
+const password = generatePassword(10)
+  const mailOptions = {
+    from: 'mohamedlanabi0@gmail.com',
+    to: mail,
+    subject: Publisher,
+    text: Content,
+  };
+
+
+  try {
+    await transporter.sendMail(mailOptions);
+    await User.create({ email: mail, password, username: firstname + " " + lastname })
+    return res.status(201).json({ mail })
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Failed to send email!');
+  }
   
   return res.status(201).json(announcement)
 }

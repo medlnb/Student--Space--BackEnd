@@ -1,6 +1,6 @@
 const Student = require("../Models/StudentModel")
 const User = require("../Models/UserModel")
-const nodemailer = require('nodemailer');
+const nodemailer = require('nodemailer')
 
 
 function generatePassword(length) {
@@ -36,8 +36,6 @@ const CreateStudents = async (req, res) => {
 
 const sendMail = async (req, res) => {
   const { matricule } = req.body;
-
-
   const stu = await Student.findOne({ matricule })
   if (!stu)
     return res.status(404).json({err:"Student's Space database doesn't reconize this matricule!"})

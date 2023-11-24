@@ -1,6 +1,8 @@
 const http = require("http")
+const express = require("express")
 
-const server = http.createServer(app);
+const app01 = express();
+const server = http.createServer(app01);
 
 const sio = require("socket.io")(server, {
     handlePreflightRequest: (req, res) => {

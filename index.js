@@ -8,12 +8,9 @@ const Schedule = require('./Routers/Schedule')
 const File = require('./Routers/File')
 const Announcement = require('./Routers/Announcement')
 
-
 require("dotenv").config()
 
 const app = express()
-
-
 
 app.use(express.json())
 app.use(cors())

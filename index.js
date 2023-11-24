@@ -7,23 +7,14 @@ const Task = require('./Routers/Task')
 const Schedule = require('./Routers/Schedule')
 const File = require('./Routers/File')
 const Announcement = require('./Routers/Announcement')
-const { Server } = require('socket.io')
-const {createServer} = require("http")
-
 require("dotenv").config()
 
 const app = express()
 
-const httpServer = createServer()
-const io = new Server(httpServer, {
-  cors: {
-    origin:"*",
-  },
-})
+
 
 app.use(express.json())
 app.use(cors())
-io.use(cors())
 
 app.use("/api/user", Authrouter)
 app.use("/api/student", Student)
@@ -38,8 +29,3 @@ mongoose.connect(process.env.MONGO_URI).then(() => {
     console.log(`Connected to the database and listening on port ${process.env.PORT}`)
   })
 })
-
-httpServer.listen(3001, () => {
-  console.log("listening to 3001")
-})
-

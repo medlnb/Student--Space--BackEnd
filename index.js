@@ -7,19 +7,19 @@ const Task = require('./Routers/Task')
 const Schedule = require('./Routers/Schedule')
 const File = require('./Routers/File')
 const Announcement = require('./Routers/Announcement')
-const { Server } = require('socket.io')
-const {createServer} = require("http")
+// const { Server } = require('socket.io')
+// const {createServer} = require("http")
 
 require("dotenv").config()
 
 const app = express()
 
-const httpServer = createServer()
-const io = new Server(httpServer, {
-  cors: {
-    origin:"*",
-  },
-})
+// const httpServer = createServer()
+// const io = new Server(httpServer, {
+//   cors: {
+//     origin:"*",
+//   },
+// })
 
 app.use(express.json())
 app.use(cors())
@@ -39,8 +39,8 @@ mongoose.connect(process.env.MONGO_URI).then(() => {
   })
 })
 
-httpServer.listen(3001, () => {
-  console.log("listening to 3001")
-})
+// httpServer.listen(3001, () => {
+//   console.log("listening to 3001")
+// })
 
-module.exports = io
+// module.exports = io

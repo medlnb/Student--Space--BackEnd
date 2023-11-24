@@ -3,7 +3,7 @@ const {createServer} = require("http")
 const httpServer = createServer();
 const io = new Server(httpServer, {
   cors: {
-    origin: "*"
+    origin: "https://s-s-s.vercel.app"
   }
 });
 

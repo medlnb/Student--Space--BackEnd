@@ -7,7 +7,7 @@ const Task = require('./Routers/Task')
 const Schedule = require('./Routers/Schedule')
 const File = require('./Routers/File')
 const Announcement = require('./Routers/Announcement')
-// const { Server } = require('socket.io')
+const { Server } = require('socket.io')
 
 require("dotenv").config()
 
@@ -26,9 +26,11 @@ app.use("/api/schedule", Schedule)
 app.use("/api/file", File)
 app.use("/api/announcement", Announcement)
 
-const httpServer = express()
-httpServer.use(cors())
-
+const io = new Server(3001, {
+  cors: {
+    origin:"*"
+  }
+})
 
 mongoose.connect(process.env.MONGO_URI).then(() => {
   app.listen(process.env.PORT, () => {

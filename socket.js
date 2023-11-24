@@ -1,25 +1,16 @@
 const http = require("http")
 const express = require("express")
 
-const app01 = express();
+const app01 = express();  
 const server = http.createServer(app01);
 
-const sio = require("socket.io")(server, {
-    handlePreflightRequest: (req, res) => {
-        const headers = {
-            "Access-Control-Allow-Headers": "Content-Type, Authorization",
-            "Access-Control-Allow-Origin": req.headers.origin, //or the specific origin you want to give access to,
-            "Access-Control-Allow-Credentials": true
-        };
-        res.writeHead(200, headers);
-        res.end();
-    }
-});
+const io = require('socket.io')(server, { origins: '*:*'});
 
-sio.on("connection", () => {
+
+io.on("connection", () => {
     console.log("Connected!");
 });
 
 server.listen(3001);
 
-module.exports = sio;
+module.exports = io;

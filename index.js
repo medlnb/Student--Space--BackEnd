@@ -7,14 +7,14 @@ const Task = require('./Routers/Task')
 const Schedule = require('./Routers/Schedule')
 const File = require('./Routers/File')
 const Announcement = require('./Routers/Announcement')
-const { Server } = require('socket.io')
-const {createServer} = require("http")
+// const { Server } = require('socket.io')
+// const {createServer} = require("http")
 
 require("dotenv").config()
 
 const app = express()
 
-const httpServer = createServer()
+const httpServer = express()
 httpServer.use(cors())
 // const io = new Server(httpServer)
 

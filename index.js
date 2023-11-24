@@ -27,8 +27,8 @@ app.use("/api/schedule", Schedule)
 app.use("/api/file", File)
 app.use("/api/announcement", Announcement)
 
-const httpServer = express()
-httpServer.use(cors())
+// const httpServer = express()
+// httpServer.use(cors())
 
 
 mongoose.connect(process.env.MONGO_URI).then(() => {

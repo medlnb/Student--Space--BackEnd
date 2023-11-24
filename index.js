@@ -24,16 +24,16 @@ app.use("/api/schedule", Schedule)
 app.use("/api/file", File)
 app.use("/api/announcement", Announcement)
 
-const {createServer} = require("http")
-const { Server } = require("socket.io");
-const httpServer = createServer();
-const io = new Server(httpServer, {
-  cors: {
-    origin: "https://s-s-s.vercel.app"
-  }
-});
+// const {createServer} = require("http")
+// const { Server } = require("socket.io");
+// const httpServer = createServer();
+// const io = new Server(httpServer, {
+//   cors: {
+//     origin: "https://s-s-s.vercel.app"
+//   }
+// });
 
-io.listen(3001);
+// io.listen(3001);
 
 
 mongoose.connect(process.env.MONGO_URI).then(() => {

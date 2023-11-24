@@ -34,11 +34,8 @@ mongoose.connect(process.env.MONGO_URI).then(() => {
   })
 })
 
-const io = new Server(3001, {
-  cors: {
-    origin:"*"
-  }
-})
+const io = new Server(3001)
+io.use(cors())
 // httpServer.listen(3001, () => {
 //   console.log("listening to 3001")
 // })

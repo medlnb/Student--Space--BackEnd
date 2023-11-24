@@ -1,10 +1,11 @@
-const http = require("http")
-const express = require("express")
+const {createServer} = require("http")
 
-const app01 = express();  
-const server = http.createServer(app01);
-
-const io = require('socket.io')(server, { origins: '*:*'});
+const httpServer = createServer();
+const io = new Server(httpServer, {
+  cors: {
+    origin: "*"
+  }
+});
 
 server.listen(3001);
 module.exports = io;

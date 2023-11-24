@@ -37,7 +37,7 @@ mongoose.connect(process.env.MONGO_URI).then(() => {
   })
 })
 
-httpServer.listen(3001, () => {
-  console.log("listening to 3001")
-})
+// httpServer.listen(3001, () => {
+//   console.log("listening to 3001")
+// })
 

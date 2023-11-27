@@ -4,9 +4,9 @@ const mongoose = require("mongoose")
 const Authrouter = require('./Routers/User')
 const Student = require('./Routers/Student')
 const Task = require('./Routers/Task')
-const Schedule = require('./Routers/Schedule')
 const File = require('./Routers/File')
 const Announcement = require('./Routers/Announcement')
+const NewSchedule = require('./Routers/NewSchedule')
 
 
 require("dotenv").config()
@@ -16,13 +16,13 @@ const app = express()
 app.use(express.json())
 app.use(cors())
 
-
 app.use("/api/user", Authrouter)
 app.use("/api/student", Student)
 app.use("/api/task", Task)
-app.use("/api/schedule", Schedule)
 app.use("/api/file", File)
 app.use("/api/announcement", Announcement)
+app.use("/api/newSchedule", NewSchedule)
+
 
 
 mongoose.connect(process.env.MONGO_URI).then(() => {

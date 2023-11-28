@@ -60,8 +60,7 @@ const password = generatePassword(10)
     to: mail,
     subject: 'Creating Password For Your Student\'s Space',
     text: `This is ur password: ${password}`,
-  };
-
+  }
 
   try {
     await transporter.sendMail(mailOptions);

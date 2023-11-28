@@ -13,7 +13,8 @@ const CreateRequest = async (req, res) => {
 
 const GetRequests = async (req,res) => {
   try {
-    const requests = await Request.find({}, { password: 0 ,__v:0})
+    const requests = await Request.find({}, { password: 0, __v: 0 })
+    
     if (!requests)
       return res.status(404).json({ msg:"Error getting requests!"})
     

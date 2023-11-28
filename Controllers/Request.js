@@ -13,9 +13,11 @@ const CreateRequest = async (req, res) => {
 
 const GetRequests = async (req, res) => {
   try {
-    const requests = await Request.find()
+    const requests = Request.find({}, { password: 0 })
+
     if (!requests)
       return res.status(404).json({ msg:"Error getting requests!"})
+    
     return res.status(200).json(requests);
 
   } catch (error) {
@@ -80,6 +82,53 @@ const AccepteRequest = async (req,res) => {
     console.log(error)
     return res.status(500).json({ msg: "Error Accepting the request!" });
   }
+}
+
+
+const RejectRequest = async (req, res) => {
+
+  const { _id } = req.params
+  const request = await Request.findOne({ _id })
+
+  const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: 'mohamedlanabi0@gmail.com',
+        pass: "rddv gnyx ptrd qtkl",
+      },
+    });
+    
+    const mailOptions = {
+      from: 'mohamedlanabi0@gmail.com',
+      to: mail,
+      subject: 'Welcome to Student\'s Space! Your Account Request has been Approved 🎉',
+      text: `Salam ${lastname} ${firstname},
+        We hope this email finds you well. We are pleased to inform you that your request to use Student\'s Space has been accepted! Welcome aboard!
+
+        Your Account Details:
+
+        mail: ${mail}
+        Password: ${password}
+        Please keep your login details secure and do not share them with anyone.
+        If you have any questions or encounter any issues while accessing your account,
+        feel free to reach out to our support team at lanabi.mohamed@univ-ouargla.dz.
+
+        We are excited to have you as part of our community.
+        Explore, engage, and make the most of your experience!
+
+        Best regards,
+        Lanabi Mohamed
+        `,
+    }
+
+    try {
+      await transporter.sendMail(mailOptions);
+      await User.create({ email: mail, password, username: firstname + " " + lastname })
+      res.status(201).json({ mail })
+    } catch (error) {
+      console.log(error)
+      res.status(500).send('Failed to send email!');
+    }
 }
 
 module.exports = {

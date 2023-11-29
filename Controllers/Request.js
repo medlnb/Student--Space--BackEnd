@@ -3,7 +3,10 @@ const User = require("../Models/UserModel")
 const nodemailer = require('nodemailer')
 
 const CreateRequest = async (req, res) => {
-  const {matricule,mail,firstname,lastname,Speciality,password} = req.body
+  const { matricule, mail, firstname, lastname, Speciality, password } = req.body
+  const exists = await Request.find({ mail })
+  if (exists)
+    return res.status(409).json({ err: "This Email allrddy exists" });
   const request = await Request.create({ matricule, mail, firstname, lastname,Speciality ,password})
   if (!request)
     return res.status(404).json({ err:"Error creating Student!"})
@@ -28,10 +31,8 @@ const GetRequests = async (req,res) => {
 const AccepteRequest = async (req,res) => {
   try {
     const { _id } = req.params
-
     const request = await Request.findOne({ _id })
   
-    
     const { firstname, lastname, mail,password,matricule } = request
   
     const user = await User.findOne({ email: mail })

@@ -4,7 +4,7 @@ const nodemailer = require('nodemailer')
 
 const CreateRequest = async (req, res) => {
   const { matricule, mail, firstname, lastname, Speciality, password } = req.body
-  const exists = await Request.find({ mail })
+  const exists = await Request.findOne({ mail })
   if (exists)
     return res.status(409).json({ err: "This Email allrddy exists" });
   const request = await Request.create({ matricule, mail, firstname, lastname,Speciality ,password})

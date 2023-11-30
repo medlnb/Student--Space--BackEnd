@@ -53,7 +53,7 @@ const createTask = async (req, res) => {
   if (!task)
     return res.status(402).json({ err: "Error creating a task" })
   
-  sendTelegramMessage(process.env.TOKEN,
+  await sendTelegramMessage(process.env.TOKEN,
     process.env.CHANNEL,
     `New task from ${className}:
     \n${taskTitle}`);

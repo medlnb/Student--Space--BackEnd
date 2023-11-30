@@ -1,29 +1,24 @@
 const Announcement = require("../Models/Announcement")
-const nodemailer = require('nodemailer')
 
-const sendMail = async(mail) => {
-  const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: 'mohamedlanabi0@gmail.com',
-      pass: "rddv gnyx ptrd qtkl",
-    },
-  })
-  const mailOptions = {
-    from: 'mohamedlanabi0@gmail.com',
-    to: mail,
-    subject: Publisher,
-    text: Content,
-  }
+async function sendTelegramMessage(token, channel, message) {
+    try {
+        // Construct the Telegram API endpoint for sending a message
+        const request = await fetch(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${channel}&text=${message}`, {
+            method: 'GET',
+            redirect: 'follow'
+        });
 
-   try {
-    await transporter.sendMail(mailOptions);
-  } catch (error) {
-    
-  }
-  
+        // Parse the JSON response from the Telegram API
+        const response = await request.json();
 
+        // Return the response object
+        return response;
+    } catch (error) {
+        // Handle errors by logging them to the console
+        console.error('Error:', error);
+    }
 }
+
 
 
 const CreateAnnouncement = async (req, res) => {
@@ -34,7 +29,12 @@ const CreateAnnouncement = async (req, res) => {
 
   if (!announcement)
     return res.status(404).json({ err: "Error Creating the Announcement" })
-  
+  console.log(announcement)
+  sendTelegramMessage(process.env.TOKEN,
+    process.env.CHANNEL,
+    `${announcement.Publisher}:
+    \n${Content}`);
+
   return res.status(201).json(announcement)
 }
 

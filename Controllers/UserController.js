@@ -31,7 +31,7 @@ const login = async (req, res) => {
   //   {teacher: ["Dr. Chabbi selma"],module: "English" }]
   
     
-  if (password !== user.password)
+  if (password !== user[0].password)
     return res.status(404).json({ PwErr:"wrong password"})
     
   return res.status(201).json({ username: user.username, email })

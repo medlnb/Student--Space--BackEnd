@@ -1,5 +1,23 @@
 const Task = require("../Models/Task")
 
+async function sendTelegramMessage(token, channel, message) {
+    try {
+        // Construct the Telegram API endpoint for sending a message
+        const request = await fetch(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${channel}&text=${message}`, {
+            method: 'GET',
+            redirect: 'follow'
+        });
+
+        // Parse the JSON response from the Telegram API
+        const response = await request.json();
+
+        // Return the response object
+        return response;
+    } catch (error) {
+        // Handle errors by logging them to the console
+        console.error('Error:', error);
+    }
+}
 
 function calculateTimeLeft(deadline) {
   const currentDate = new Date();
@@ -35,6 +53,10 @@ const createTask = async (req, res) => {
   if (!task)
     return res.status(402).json({ err: "Error creating a task" })
   
+  sendTelegramMessage(process.env.TOKEN,
+    process.env.CHANNEL,
+    `New task from ${className}:
+    \n${taskTitle}`);
   return res.status(201).json(task)
 }
 const removeTask = async (req, res) => {

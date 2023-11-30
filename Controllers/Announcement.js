@@ -29,10 +29,10 @@ const CreateAnnouncement = async (req, res) => {
 
   if (!announcement)
     return res.status(404).json({ err: "Error Creating the Announcement" })
-  console.log(announcement)
+  
   sendTelegramMessage(process.env.TOKEN,
     process.env.CHANNEL,
-    `${announcement.Publisher}:
+    `New Announcement from ${announcement.Publisher}:
     \n${Content}`);
 
   return res.status(201).json(announcement)

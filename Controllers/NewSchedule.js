@@ -2,7 +2,6 @@ const NewSchedule = require("../Models/NewSchedule")
 
 const GetSchedule = async (req, res) => { 
   const { classgroup } = req.params
-  console.log(classgroup)
   const [Class, Group] = classgroup.split("@")
 
   const schedule = await NewSchedule.findOne({ Class, Group })

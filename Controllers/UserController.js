@@ -16,7 +16,9 @@ const login = async (req, res) => {
     return res.status(404).json({ MailErr: "Email does'nt exist" })
   
   if (user[0].isTeacher) {
-    const teachers = user.map(usr=>(usr.username))
+    let teachers = user.map(usr => (usr.username))
+    if (teachers.length === 1)
+      teachers = teachers[0]
     return res.status(201).json({ username:teachers , email, isTeacher: true })
   }
   

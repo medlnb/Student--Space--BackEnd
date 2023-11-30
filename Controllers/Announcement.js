@@ -34,7 +34,6 @@ const CreateAnnouncement = async (req, res) => {
     process.env.CHANNEL,
     `New Announcement from ${announcement.Publisher}:
     \n${Content}`);
-
   return res.status(201).json(announcement)
 }
 

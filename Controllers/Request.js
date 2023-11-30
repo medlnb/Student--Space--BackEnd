@@ -8,7 +8,7 @@ const CreateRequest = async (req, res) => {
   if (exists)
     return res.status(409).json({ err: "This Email allrddy exists" })
   const exist = await Request.findOne({ matricule })
-  if (exists)
+  if (exist)
     return res.status(409).json({ err: "This Matricule allrddy exists" })
   const request = await Request.create({ matricule, mail, firstname, lastname,Speciality ,password})
   if (!request)

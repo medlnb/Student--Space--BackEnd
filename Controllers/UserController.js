@@ -20,9 +20,9 @@ const login = async (req, res) => {
   if (user[0].isTeacher) {
     let modules = ""
     user.map(usr => {
-      modules = modules+usr.email+"$$"
+      modules = modules+usr.username+"$$"
     })    
-    modules = modules.slice(0, -2);
+    modules = modules.slice(0, -2)
 
     return res.status(201).json({
       username: user[0].username,

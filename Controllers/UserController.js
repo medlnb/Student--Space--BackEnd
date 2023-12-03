@@ -25,7 +25,7 @@ const login = async (req, res) => {
     modules = modules.slice(0, -2)
 
     return res.status(201).json({
-      username: user[0].username,
+      username: user[0].email,
       email: modules,
       isTeacher: true
     })

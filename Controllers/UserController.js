@@ -22,6 +22,8 @@ const login = async (req, res) => {
     user.map(usr => {
       modules = modules+usr.email+"$$"
     })    
+    modules = modules.slice(0, -2);
+
     return res.status(201).json({
       username: user[0].username,
       email: modules,

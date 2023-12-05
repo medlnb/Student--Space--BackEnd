@@ -24,11 +24,15 @@ const login = async (req, res) => {
     })    
     modules = modules.slice(0, -2)
 
-    return res.status(201).json({
-      username: user[0].email,
-      email: modules,
-      isTeacher: true
-    })
+    if (password === user[0].password)
+      return res.status(201).json({
+        username: user[0].email,
+        email: modules,
+        isTeacher: true
+      })
+    else {
+      return res.status(401).json({ PwErr:"wrong password"})
+    }
   }    
   if (password !== user[0].password)
     return res.status(404).json({ PwErr:"wrong password"})

@@ -28,7 +28,8 @@ const login = async (req, res) => {
       return res.status(201).json({
         username: user[0].email,
         email: modules,
-        isTeacher: true
+        isTeacher: true,
+        speciality:user[0].speciality
       })
     else {
       return res.status(401).json({ PwErr:"wrong password"})

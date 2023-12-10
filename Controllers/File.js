@@ -16,7 +16,7 @@ const GetModules = async (req, res) => {
   const Page = req.params.p || 0
   const FilePerPage = 2
 
-  const Modules = await File.find({speciality:"MATER@1@Artificial Intelligence & Data Science"}).skip(Page * FilePerPage).limit(FilePerPage)
+  const Modules = await File.find({speciality:"MASTER@1@Artificial Intelligence & Data Science"}).skip(Page * FilePerPage).limit(FilePerPage)
    res.status(201).json(Modules)
 }
 module.exports = {

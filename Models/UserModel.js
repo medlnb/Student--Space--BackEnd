@@ -19,7 +19,7 @@ const UserSchema = new Schema({
     type:Boolean
   },
   speciality: {
-    type: String
+    type: Array
   }
 })
 

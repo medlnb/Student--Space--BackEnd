@@ -27,7 +27,6 @@ const FileSchema = new Schema({
   speciality: {
     type: String
   }
-
 })
 
 module.exports = mongoose.model("File" ,FileSchema)

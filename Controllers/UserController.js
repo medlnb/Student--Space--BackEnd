@@ -37,7 +37,7 @@ const login = async (req, res) => {
   if (password !== user[0].password)
     return res.status(404).json({ PwErr:"wrong password"})
     
-  return res.status(201).json({ username: user[0].username, email })
+  return res.status(201).json({ username: user[0].username, email ,speciality:user[0].speciality})
 }
 
 module.exports = {

@@ -23,7 +23,11 @@ const FileSchema = new Schema({
   },
   title: {
     type: String
+  },
+  speciality: {
+    type: String
   }
+
 })
 
 module.exports = mongoose.model("File" ,FileSchema)

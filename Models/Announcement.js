@@ -14,6 +14,9 @@ const AnnouncementSchema = new Schema({
   Date:{
     type: Date,
     required:true
+  },
+  speciality: {
+    type: String
   }
 },{ timestamps: true })
 

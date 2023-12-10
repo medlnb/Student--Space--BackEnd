@@ -20,6 +20,9 @@ const TaskSchema = new Schema({
   deadLine: {
     type: Object,
     required: true
+  },
+  speciality: {
+    type: String
   }
 })
 

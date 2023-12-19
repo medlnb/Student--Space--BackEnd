@@ -7,7 +7,7 @@ const File = require('./Routers/File')
 const Announcement = require('./Routers/Announcement')
 const NewSchedule = require('./Routers/NewSchedule')
 const Request = require('./Routers/Request')
-
+const Promotion = require('./Routers/Promotion')
 
 require("dotenv").config()
 
@@ -22,6 +22,8 @@ app.use("/api/file", File)
 app.use("/api/announcement", Announcement)
 app.use("/api/newSchedule", NewSchedule)
 app.use("/api/request", Request)
+app.use("/api/promotion", Promotion)
+
 
 
 

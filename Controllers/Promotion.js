@@ -2,11 +2,10 @@ const Promotion = require("../Models/Promotion")
 
 const PostRequest = async (req, res) => { 
   const { Speciality, Year, Email, Password ,TeacherName} = req.body
-  const Request = await Promotion.create({ Speciality, Year, Email, Password,TeacherName,Accepted: False })
-  if (!Request)
+  const request = await Promotion.create({ Speciality, Year, Email, Password,TeacherName,Accepted: False })
+  if (!request)
     return res.status(404).json({ err: "Error sending Request" })
-
-  return res.status(201).json(Request)
+  return res.status(201).json(request)
 }
 
 const AccepteRequest = async (req, res) => {

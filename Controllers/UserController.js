@@ -9,7 +9,7 @@ const CreateAdmin = async (req, res) => {
       email,
       password,
       isTeacher: true,
-      speciality:[{speciality,Admin:True}],
+      speciality:[{speciality,Admin:true}],
       Year,
       Module
     }

@@ -2,7 +2,7 @@ const User = require("../Models/UserModel")
 
 
 const CreateAdmin = async (req, res) => {
-  const { username, email, password,speciality,Year } = req.body
+  const { username, email, password,speciality,Year,Module } = req.body
   const user = await User.create(
     {
       username,
@@ -11,7 +11,8 @@ const CreateAdmin = async (req, res) => {
       isTeacher: true,
       speciality,
       Year,
-      Admin:[speciality]
+      Admin: [speciality],
+      Module
     }
   )
   if (!user)

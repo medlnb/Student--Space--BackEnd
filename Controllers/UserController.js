@@ -20,7 +20,7 @@ const CreateAdmin = async (req, res) => {
     username: username,
     email,
     isTeacher: true,
-    speciality,
+    speciality:[{name:speciality,Admin:true}],
   })
 }
 

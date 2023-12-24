@@ -8,7 +8,6 @@ const CreateAdmin = async (req, res) => {
       username,
       email,
       password,
-      isTeacher: true,
       speciality:[{name:speciality,Admin:true}],
       Year,
       Module
@@ -19,7 +18,7 @@ const CreateAdmin = async (req, res) => {
   return res.status(200).json({
     username: username,
     email,
-    isTeacher: true,
+    Module,
     speciality:[{name:speciality,Admin:true}],
   })
 }

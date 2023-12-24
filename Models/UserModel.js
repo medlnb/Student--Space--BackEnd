@@ -15,9 +15,6 @@ const UserSchema = new Schema({
     type: String,
     required: true
   },
-  isTeacher: {
-    type:Boolean
-  },
   speciality: {
     type: Array
   },

@@ -9,15 +9,19 @@ const CreateAdmin = async (req, res) => {
       email,
       password,
       isTeacher: true,
-      speciality,
+      speciality:[{speciality,Admin:True}],
       Year,
-      Admin: [speciality],
       Module
     }
   )
   if (!user)
     return res.status(409).json({ err: "Failled creating Teacher" })
-  return res.status(200).json({ username:username, email, isTeacher: true  })
+  return res.status(200).json({
+    username: username,
+    email,
+    isTeacher: true,
+    speciality,
+  })
 }
 
 const CreateTeacher = async (req, res) => {

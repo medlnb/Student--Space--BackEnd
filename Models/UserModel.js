@@ -24,9 +24,6 @@ const UserSchema = new Schema({
   Year: {
     type: String
   },
-  Admin: {
-    type:[String]
-  },
   Module: {
     type:String
   }

@@ -40,19 +40,14 @@ const login = async (req, res) => {
   if (!user[0])
     return res.status(404).json({ MailErr: "Email does'nt exist" })
   
-  if (user[0].isTeacher) {
-    let modules = ""
-    user.map(usr => {
-      modules = modules+usr.username+"$$"
-    })    
-    modules = modules.slice(0, -2)
-
+  if (user[0].Module) {
     if (password === user[0].password)
       return res.status(201).json({
-        username: user[0].email,
-        email: modules,
-        isTeacher: true,
-        speciality:user[0].speciality
+        username: user[0].username,
+        email: user[0].email,
+        Module:user[0].Module,
+        speciality: user[0].speciality,
+        Year:user[0].Year
       })
     else {
       return res.status(401).json({ PwErr:"wrong password"})

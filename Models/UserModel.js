@@ -26,6 +26,9 @@ const UserSchema = new Schema({
   },
   Admin: {
     type:[String]
+  },
+  Module: {
+    type:String
   }
 })
 

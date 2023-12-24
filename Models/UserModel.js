@@ -20,6 +20,12 @@ const UserSchema = new Schema({
   },
   speciality: {
     type: Array
+  },
+  Year: {
+    type: String
+  },
+  Admin: {
+    type:[String]
   }
 })
 

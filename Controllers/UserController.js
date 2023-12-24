@@ -1,6 +1,24 @@
 const User = require("../Models/UserModel")
 
 
+const CreateAdmin = async (req, res) => {
+  const { username, email, password,speciality,Year } = req.body
+  const user = await User.create(
+    {
+      username,
+      email,
+      password,
+      isTeacher: true,
+      speciality,
+      Year,
+      Admin:[speciality]
+    }
+  )
+  if (!user)
+    return res.status(409).json({ err: "Failled creating Teacher" })
+  return res.status(200).json({ username:username, email, isTeacher: true  })
+}
+
 const CreateTeacher = async (req, res) => {
   const { username, email, password } = req.body
   const user = await User.create({ username, email, password, isTeacher: true })
@@ -43,5 +61,6 @@ const login = async (req, res) => {
 
 module.exports = {
   login,
-  CreateTeacher
+  CreateTeacher,
+  CreateAdmin
 }

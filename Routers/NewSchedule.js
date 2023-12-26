@@ -3,7 +3,7 @@ const { GetSchedule, createSchedule,updateSchedule } = require("../Controllers/N
 
 const router = express.Router()
 
-router.get('/:classgroup', GetSchedule)
+router.post('/get/', GetSchedule)
 router.post('/', createSchedule)
 router.patch('/:classgroup', updateSchedule)
 

@@ -17,6 +17,9 @@ const NewScheduleSchema = new Schema({
   },
   types: {
     type: [String]
+  },
+  Year: {
+    type: String
   }
 })
 

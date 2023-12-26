@@ -1,10 +1,8 @@
 const NewSchedule = require("../Models/NewSchedule")
 
 const GetSchedule = async (req, res) => { 
-  const { classgroup } = req.params
-  const [Class, Group] = classgroup.split("!!!")
-
-  const schedule = await NewSchedule.findOne({ Class, Group })
+  const [Class, Group] = req.body
+  const schedule = await NewSchedule.findOne({ Class, Group ,Year})
   
   if (!schedule)
     return res.status(401).json({ message: "Error getting the schedule" })

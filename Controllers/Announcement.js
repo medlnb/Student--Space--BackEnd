@@ -38,7 +38,8 @@ const CreateAnnouncement = async (req, res) => {
 }
 
 const GetAnnouncements = async (req, res) => { 
-  const {spec} = req.params.spec
+  const  spec  = req.params.spec
+  console.log(spec)
   const announcements = await Announcement.find({speciality:spec}).sort({ createdAt: 'desc' });
   if (!announcements)
     return res.status(404).json({ err: "Error Getting the Announcements" })

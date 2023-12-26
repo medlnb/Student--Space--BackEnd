@@ -1,7 +1,7 @@
 const NewSchedule = require("../Models/NewSchedule")
 
-const GetSchedule = async (req, res) => { 
-  const [Class, Group, Year] = req.body
+const GetSchedule = async (req, res) => {
+  const {Class, Group, Year} = req.body
   const schedule = await NewSchedule.findOne({ Class, Group ,Year})
   
   if (!schedule)

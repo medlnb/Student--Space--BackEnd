@@ -19,8 +19,8 @@ const updateSchedule = async (req, res) => {
 }
 
 const createSchedule = async (req, res) => {
-  const {Class,Group, modules, Classrooms, types } = req.body
-  const newSchedule = await NewSchedule.create({ Class,Group,modules, Classrooms, types })
+  const {Class,Group, modules, Classrooms, types,Year } = req.body
+  const newSchedule = await NewSchedule.create({ Class,Group,modules, Classrooms, types,Year })
   
   if (!newSchedule)
     return res.status(400).json({ message: "Error creating newSchedule" })

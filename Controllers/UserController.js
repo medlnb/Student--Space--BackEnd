@@ -8,7 +8,7 @@ const CreateAdmin = async (req, res) => {
       username,
       email,
       password,
-      speciality:[{name:speciality,Admin:true}],
+      speciality:[{name:speciality,Admin:true,Year}],
       Year,
       Module
     }
@@ -19,8 +19,7 @@ const CreateAdmin = async (req, res) => {
     username: username,
     email,
     Module,
-    Year,
-    speciality:[{name:speciality,Admin:true}],
+    speciality:[{name:speciality,Admin:true,Year}],
   })
 }
 
@@ -46,8 +45,7 @@ const login = async (req, res) => {
         username: user[0].username,
         email: user[0].email,
         Module:user[0].Module,
-        speciality: user[0].speciality,
-        Year:user[0].Year
+        speciality: user[0].speciality
       })
     else {
       return res.status(401).json({ PwErr:"wrong password"})

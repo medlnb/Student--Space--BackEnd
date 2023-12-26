@@ -11,7 +11,7 @@ const GetSchedule = async (req, res) => {
 }
 
 const updateSchedule = async (req, res) => {
-  const [Class, Group,Year] = classgroup.split("@")
+  const [Class, Group,Year] = classgroup.split("###")
 
   await NewSchedule.deleteMany({Class, Group,Year})
   createSchedule(req,res)

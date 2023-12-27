@@ -56,8 +56,34 @@ const login = async (req, res) => {
   return res.status(201).json({ username: user[0].username, email ,speciality:user[0].speciality})
 }
 
+const GetSpecs = async (req, res) => {
+  try {
+    const { speciality, Year } = req.body;
+    const Specs = await User.find({ Module: { $exists: true } });
+
+    if (!Specs || Specs.length === 0) {
+      return res.status(409).json({ err: "Failed Finding Teachers" });
+    }
+
+    const filteredSpecs = Specs.reduce((acc, teacher) => {
+      teacher.speciality.forEach(spec => {
+        if (spec.name === speciality && spec.Year === Year) {
+          acc.push({ spec: spec.name, Year: spec.Year });
+        }
+      });
+      return acc;
+    }, []);
+
+    return res.status(200).json(filteredSpecs);
+  } catch (error) {
+    return res.status(500).json({ err: "Internal Server Error" });
+  }
+};
+
+
 module.exports = {
   login,
   CreateTeacher,
-  CreateAdmin
+  CreateAdmin,
+  GetSpecs
 }

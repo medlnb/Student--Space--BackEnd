@@ -58,7 +58,6 @@ const login = async (req, res) => {
 
 const GetSpecs = async (req, res) => {
   try {
-    const { speciality, Year } = req.body;
     const Specs = await User.find({ Module: { $exists: true } });
 
     if (!Specs || Specs.length === 0) {

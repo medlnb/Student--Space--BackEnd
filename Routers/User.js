@@ -8,6 +8,4 @@ router.post('/teacher', CreateTeacher)
 router.post('/admin', CreateAdmin)
 router.post('/specs', GetSpecs)
 
-
-
 module.exports = router

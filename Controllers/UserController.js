@@ -67,7 +67,7 @@ const GetSpecs = async (req, res) => {
 
     const filteredSpecs = Specs.reduce((acc, teacher) => {
       teacher.speciality.forEach(spec => {
-        if (spec.name === speciality && spec.Year === Year) {
+        if (spec.Admin) {
           acc.push({ spec: spec.name, Year: spec.Year });
         }
       });

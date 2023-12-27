@@ -6,6 +6,6 @@ const router = express.Router()
 router.post('/login', login)
 router.post('/teacher', CreateTeacher)
 router.post('/admin', CreateAdmin)
-router.post('/specs', GetSpecs)
+router.get('/specs', GetSpecs)
 
 module.exports = router

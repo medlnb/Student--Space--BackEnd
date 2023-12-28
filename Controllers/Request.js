@@ -35,8 +35,7 @@ const AccepteRequest = async (req,res) => {
   try {
     const { _id } = req.params
     const request = await Request.findOne({ _id })
-  
-    const { firstname, lastname, mail,password,matricule } = request
+    const { firstname, lastname, mail,password,Speciality } = request
   
     const user = await User.findOne({ email: mail })
     if (user)
@@ -75,7 +74,8 @@ const AccepteRequest = async (req,res) => {
 
     try {
       await transporter.sendMail(mailOptions);
-      await User.create({ email: mail, password, username: firstname + " " + lastname,speciality:[{}] })
+      console.log([Speciality])
+      await User.create({ email: mail, password, username: firstname + " " + lastname,speciality:[Speciality] })
       res.status(201).json({ mail })
     } catch (error) {
       res.status(500).send('Failed to send email!');

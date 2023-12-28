@@ -74,7 +74,6 @@ const AccepteRequest = async (req,res) => {
 
     try {
       await transporter.sendMail(mailOptions);
-      console.log([Speciality])
       await User.create({ email: mail, password, username: firstname + " " + lastname,speciality:[Speciality] })
       res.status(201).json({ mail })
     } catch (error) {

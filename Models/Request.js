@@ -22,7 +22,7 @@ const RequestSchema = new Schema({
     required: true
   },
   Speciality: {
-    type: String,
+    type: Object,
     required: true
   },
   password:{

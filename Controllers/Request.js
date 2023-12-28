@@ -75,10 +75,9 @@ const AccepteRequest = async (req,res) => {
 
     try {
       await transporter.sendMail(mailOptions);
-      await User.create({ email: mail, password, username: firstname + " " + lastname })
+      await User.create({ email: mail, password, username: firstname + " " + lastname,speciality:[{}] })
       res.status(201).json({ mail })
     } catch (error) {
-      console.log(error)
       res.status(500).send('Failed to send email!');
     }
     await Request.deleteOne({_id})

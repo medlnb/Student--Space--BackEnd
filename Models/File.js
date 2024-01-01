@@ -26,6 +26,9 @@ const FileSchema = new Schema({
   },
   speciality: {
     type: String
+  },
+  Year:{
+    type: String
   }
 })
 

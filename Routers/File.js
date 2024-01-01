@@ -6,7 +6,7 @@ const router = express.Router()
 
 
 
-router.get('/:p', GetModules)
+router.post('/', GetModules)
 router.post('/', CreateFile)
 
 module.exports = router

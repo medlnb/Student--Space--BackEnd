@@ -23,8 +23,8 @@ const CreateAdmin = async (req, res) => {
 }
 
 const CreateTeacher = async (req, res) => {
-  const { username, email, password } = req.body
-  const user = await User.create({ username, email, password, isTeacher: true })
+  const { username, email, password ,Module} = req.body
+  const user = await User.create({ username, email, password,Module})
   if (!user)
     return res.status(409).json({ err: "Failled creating Teacher" })
   return res.status(200).json({ username:username, email, isTeacher: true  })

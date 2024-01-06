@@ -4,13 +4,16 @@ const Schema = mongoose.Schema
 
 const FileSchema = new Schema({
   Module:{
-    type: String
+    type: String,
+    required:true
   },
   Chapter: {
-    type: String
+    type: String,
+    required:true
   },
   Teacher: {
-    type: String
+    type: String,
+    required:true
   },
   Link: {
     type: String
@@ -22,13 +25,16 @@ const FileSchema = new Schema({
     type: String
   },
   title: {
-    type: String
+    type: String,
+    required:true
   },
   speciality: {
-    type: String
+    type: String,
+    required:true
   },
   Year:{
-    type: String
+    type: String,
+    required:true
   }
 })
 

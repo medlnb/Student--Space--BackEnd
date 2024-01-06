@@ -3,12 +3,12 @@ const File = require("../Models/File")
 
 const CreateFile = async (req, res) => {
   const {Module,Chapter,Teacher,Link,DescriptionClass,ModuleDescription,title,speciality,Year} = req.body
-  
+  if (!Module || !Chapter || !Teacher || !title || !speciality || !Year)
+    return res.status(404).json({ err: "Module, Chapter, Teacher, title, speciality, Year r required." })
   const file = await File.create({Module,Chapter,Teacher,Link,DescriptionClass,ModuleDescription,title,speciality,Year}) 
 
   if (!file)
     return res.status(404).json({ err: "Error Creating the File" })
-  
   return res.status(201).json(file)
 }
 

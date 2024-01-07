@@ -9,25 +9,33 @@ const CreateAdmin = async (req, res) => {
       username,
       email,
       password,
-      speciality:[{name:speciality,Admin:true,Year}],
-      Module
+      speciality: [{
+        name: speciality,
+        Admin: true,
+        Year,
+        Modules:[Module]
+      }],
     }
   )
   if (!user)
     return res.status(409).json({ err: "Failled creating Teacher" })
   return res.status(200).json({
-    username: username,
+    username,
     email,
-    Module,
-    speciality:[{name:speciality,Admin:true,Year}],
+    speciality: [{
+        name: speciality,
+        Admin: true,
+        Year,
+        Modules:[Module]
+      }],
   })
 }
 
 const CreateTeacher = async (req, res) => {
-  const { username, email, password, Module, speciality } = req.body
+  const { username, email, password, speciality } = req.body
   
-  const user = await User.create({ username:"Dr. "+username, email, password, Module,speciality })
-  const file = await File.create({Teacher:username, speciality:speciality.name, Year:speciality.Year,Module})
+  const user = await User.create({ username:"Dr. "+username, email, password,speciality })
+  const file = await File.create({Teacher:username, speciality:speciality.name, Year:speciality.Year,Module:speciality.Modules})
   if (!user || !file)
     return res.status(409).json({ err: "Failled creating Teacher" })
   return res.status(200).json({ username:username  })
@@ -42,8 +50,7 @@ const getTeachers = async (req, res) => {
         'name': speciality.name,
         'Year': speciality.Year
       }
-    },
-    'Module': { $exists: true }
+    }
   }
 ).select('-_id -__v -speciality')
 
@@ -54,32 +61,36 @@ const getTeachers = async (req, res) => {
 
 const login = async (req, res) => {
   const { email, password } = req.body
-  const user = await User.find({ email }) 
+  const user = await User.findOne({ email }) 
 
-  if (!user[0])
+  if (!user)
     return res.status(404).json({ MailErr: "Email does'nt exist" })
-  
-  if (user[0].Module) {
-    if (password === user[0].password)
-      return res.status(201).json({
-        username: user[0].username,
-        email: user[0].email,
-        Module:user[0].Module,
-        speciality: user[0].speciality
-      })
-    else {
-      return res.status(401).json({ PwErr:"wrong password"})
-    }
-  }    
-  if (password !== user[0].password)
+
+  if (password !== user.password)
     return res.status(404).json({ PwErr:"wrong password"})
-    
-  return res.status(201).json({ username: user[0].username, email ,speciality:user[0].speciality})
+  
+  if (user.speciality[0].Modules) { 
+      return res.status(201).json({
+        username: user.username,
+        email: user.email,
+        speciality: user.speciality
+      })
+  }    
+  return res.status(201).json({
+    username: user.username,
+    email,
+    speciality: user.speciality
+  })
 }
 
 const GetSpecs = async (req, res) => {
   try {
-    const Specs = await User.find({ Module: { $exists: true } });
+    const Specs = await User.find({
+    'speciality': {
+      $elemMatch: {
+        "Admin": { $exists: true }
+      }
+    }})
 
     if (!Specs || Specs.length === 0) {
       return res.status(409).json({ err: "Failed Finding Teachers" });

@@ -18,9 +18,6 @@ const UserSchema = new Schema({
   speciality: {
     type: Array,
     required:true
-  },
-  Module: {
-    type:String
   }
 })
 

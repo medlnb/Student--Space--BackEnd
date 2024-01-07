@@ -25,14 +25,32 @@ const CreateAdmin = async (req, res) => {
 
 const CreateTeacher = async (req, res) => {
   const { username, email, password, Module, speciality } = req.body
-  username = "Dr. "+username
-  const user = await User.create({ username, email, password, Module,speciality })
+  
+  const user = await User.create({ username:"Dr. "+username, email, password, Module,speciality })
   const file = await File.create({Teacher:username, speciality:speciality.name, Year:speciality.Year,Module})
   if (!user || !file)
     return res.status(409).json({ err: "Failled creating Teacher" })
   return res.status(200).json({ username:username  })
 }
+const getTeachers = async (req, res) => {
+  const speciality = req.body
 
+ const Teachers = await User.find(
+  {
+    'speciality': {
+      $elemMatch: {
+        'name': speciality.name,
+        'Year': speciality.Year
+      }
+    },
+    'Module': { $exists: true }
+  }
+);
+
+  if (!Teachers)
+    return res.status(409).json({ err: "Failled Finding Teacher" })
+  return res.status(201).json(Teachers)
+}
 
 const login = async (req, res) => {
   const { email, password } = req.body
@@ -87,5 +105,6 @@ module.exports = {
   login,
   CreateTeacher,
   CreateAdmin,
-  GetSpecs
+  GetSpecs,
+  getTeachers
 }

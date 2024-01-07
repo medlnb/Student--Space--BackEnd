@@ -13,7 +13,7 @@ const CreateAdmin = async (req, res) => {
         name: speciality,
         Admin: true,
         Year,
-        Modules:[Module]
+        Module
       }],
     }
   )
@@ -26,7 +26,7 @@ const CreateAdmin = async (req, res) => {
         name: speciality,
         Admin: true,
         Year,
-        Modules:[Module]
+        Module
       }],
   })
 }

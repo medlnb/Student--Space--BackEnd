@@ -37,7 +37,8 @@ function calculateTimeLeft(deadline) {
 }
 
 const getTasks = async (req, res) => { 
-  const Tasks = await Task.find({speciality:"MASTER@1@Artificial Intelligence & Data Science"})
+  const { speciality, Year } =req.body
+  const Tasks = await Task.find({speciality,Year})
   if (!Tasks)
     return res.status(404).json({ err: "Error getting the tasks" })
 
@@ -47,8 +48,8 @@ const getTasks = async (req, res) => {
 }
 
 const createTask = async (req, res) => {
-  const { className, taskTitle, deadLine,Description,Link,speciality } = req.body
-  const task = await Task.create({ className, taskTitle, deadLine ,Description,Link,speciality})
+  const { className, taskTitle, deadLine,Description,Link,speciality,Year } = req.body
+  const task = await Task.create({ className, taskTitle, deadLine ,Description,Link,speciality,Year})
 
   if (!task)
     return res.status(402).json({ err: "Error creating a task" })

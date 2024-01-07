@@ -22,7 +22,12 @@ const TaskSchema = new Schema({
     required: true
   },
   speciality: {
-    type: String
+    type: String,
+    required: true
+  },
+  Year: {
+    type: String,
+    required: true
   }
 })
 

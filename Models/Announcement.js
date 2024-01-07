@@ -16,8 +16,13 @@ const AnnouncementSchema = new Schema({
     required:true
   },
   speciality: {
-    type: String
-  }
+    type: String,
+    required:true
+  },
+  Year: {
+    type: String,
+    required:true
+  },
 },{ timestamps: true })
 
 module.exports = mongoose.model("Announcement" ,AnnouncementSchema)

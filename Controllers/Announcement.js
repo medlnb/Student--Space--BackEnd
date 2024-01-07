@@ -22,10 +22,10 @@ async function sendTelegramMessage(token, channel, message) {
 
 
 const CreateAnnouncement = async (req, res) => {
-  const { Publisher, Content ,speciality} = req.body
+  const { Publisher, Content ,speciality,Year} = req.body
   const date = new Date()
   
-  const announcement = await Announcement.create({Publisher,Content,Date:date,speciality}) 
+  const announcement = await Announcement.create({Publisher,Content,Date:date,speciality,Year}) 
 
   if (!announcement)
     return res.status(404).json({ err: "Error Creating the Announcement" })
@@ -38,9 +38,8 @@ const CreateAnnouncement = async (req, res) => {
 }
 
 const GetAnnouncements = async (req, res) => { 
-  const  spec  = req.params.spec
-  console.log(spec)
-  const announcements = await Announcement.find({speciality:spec}).sort({ createdAt: 'desc' });
+  const  {speciality,Year}= req.body
+  const announcements = await Announcement.find({speciality,Year}).sort({ createdAt: 'desc' });
   if (!announcements)
     return res.status(404).json({ err: "Error Getting the Announcements" })
   return res.status(201).json(announcements)

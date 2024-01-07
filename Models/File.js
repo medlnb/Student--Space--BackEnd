@@ -8,8 +8,7 @@ const FileSchema = new Schema({
     required:true
   },
   Chapter: {
-    type: String,
-    required:true
+    type: String
   },
   Teacher: {
     type: String,
@@ -25,8 +24,7 @@ const FileSchema = new Schema({
     type: String
   },
   title: {
-    type: String,
-    required:true
+    type: String
   },
   speciality: {
     type: String,

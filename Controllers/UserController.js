@@ -24,10 +24,10 @@ const CreateAdmin = async (req, res) => {
 }
 
 const CreateTeacher = async (req, res) => {
-  const { username, email, password, Module, speciality, Year } = req.body
+  const { username, email, password, Module, speciality } = req.body
   username = "Dr. "+username
-  const user = await User.create({ username, email, password, Module })
-  const file = await File.create({Teacher:username, speciality, Year,Module})
+  const user = await User.create({ username, email, password, Module,speciality })
+  const file = await File.create({Teacher:username, speciality:speciality.name, Year:speciality.Year,Module})
   if (!user || !file)
     return res.status(409).json({ err: "Failled creating Teacher" })
   return res.status(200).json({ username:username  })

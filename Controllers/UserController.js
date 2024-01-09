@@ -66,7 +66,7 @@ const getTeachers = async (req, res) => {
       }
     }
   }
-).select('-_id -__v -speciality')
+).select('-_id -__v ')
 
   if (!Teachers)
     return res.status(409).json({ err: "Failled Finding Teacher" })

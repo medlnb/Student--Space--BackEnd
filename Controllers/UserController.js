@@ -61,7 +61,8 @@ const getTeachers = async (req, res) => {
     'speciality': {
       $elemMatch: {
         'name': speciality.name,
-        'Year': speciality.Year
+        'Year': speciality.Year,
+        'Module': {"$exists":true}
       }
     }
   }

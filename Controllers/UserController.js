@@ -31,18 +31,27 @@ const CreateAdmin = async (req, res) => {
   })
 }
 
-const CreateTeacher = async (req, res) => {
-  const { username, email, password, speciality } = req.body
+// const CreateTeacher = async (req, res) => {
+//   const { username, email, password, speciality } = req.body
   
-  const user = await User.create({ username:"Dr. "+username, email, password,speciality })
-  const file = await File.create({Teacher:username, speciality:speciality.name, Year:speciality.Year,Module:speciality.Modules})
-  if (!user || !file)
-    return res.status(409).json({ err: "Failled creating Teacher" })
-  return res.status(200).json({ username:username  })
+//   const user = await User.create({ username:"Dr. "+username, email, password,speciality })
+//   const file = await File.create({Teacher:username, speciality:speciality.name, Year:speciality.Year,Module:speciality.Modules})
+//   if (!user || !file)
+//     return res.status(409).json({ err: "Failled creating Teacher" })
+//   return res.status(200).json({ username:username  })
+// }
+
+const CreateTeacher = async (req, res) => {
+  const { username, email, password } = req.body
+
+  const user = await User.create({ username:"Dr. "+username, email, password,speciality :[]})
+  if (!user )
+    return res.status(404).json({ err: "Failled creating Teacher" })
+  
+  return res.status(200).json({ username: "Dr. "+username})
 }
 const getTeachers = async (req, res) => {
   const speciality = req.body
-
  const Teachers = await User.find(
   {
     'speciality': {

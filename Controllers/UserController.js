@@ -49,7 +49,8 @@ const CreateAdmin = async (req, res) => {
 const AddTeacher = async (req, res) => {
   const { email, Module } = req.body;
   const authorization = req.user;
-  const speciality = authorization.speciality[0];
+  const {specIndex} = req.params
+  const speciality = authorization.speciality[specIndex];
   const updatedUser = await User.updateOne(
     { email },
     { $push: { speciality: {
@@ -79,7 +80,8 @@ const CreateTeacher = async (req, res) => {
 };
 const getTeachers = async (req, res) => {
   const authorization = req.user;
-  const speciality = authorization.speciality[0];
+  const {specIndex} = req.params
+  const speciality = authorization.speciality[specIndex];
   const Teachers = await User.find({
     speciality: {
       $elemMatch: {

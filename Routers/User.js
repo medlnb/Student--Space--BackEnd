@@ -10,8 +10,8 @@ router.post('/teacher', CreateTeacher)
 router.get('/specs', GetSpecs)
 
 router.use(RequireAuth)
-router.get('/teacher', getTeachers)
-router.patch('/teacher', AddTeacher)
+router.get('/teacher/:specIndex', getTeachers)
+router.patch('/teacher/:specIndex', AddTeacher)
 
 
 

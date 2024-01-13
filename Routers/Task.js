@@ -3,8 +3,8 @@ const { createTask, removeTask ,getTasks} = require("../Controllers/Task")
 
 const router = express.Router()
 
-router.get('/', getTasks)
-router.post('/create', createTask)
+router.get('/:specIndex', getTasks)
+router.post('/create/:specIndex', createTask)
 router.delete('/:taskid', removeTask)
 
 module.exports = router

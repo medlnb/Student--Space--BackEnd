@@ -40,8 +40,9 @@ function calculateTimeLeft(deadline) {
 
 const getTasks = async (req, res) => {
   const authorization = req.user;
-  const speciality = authorization.speciality[0].name;
-  const Year = authorization.speciality[0].Year;
+  const {specIndex} = req.params;
+  const speciality = authorization.speciality[specIndex].name;
+  const Year = authorization.speciality[specIndex].Year;
 
   const Tasks = await Task.find({ speciality, Year });
   if (!Tasks) return res.status(404).json({ err: "Error getting the tasks" });
@@ -55,8 +56,10 @@ const createTask = async (req, res) => {
   const { taskTitle, deadLine, Description, Link } = req.body;
   const authorization = req.user;
   const className = authorization.username;
-  const speciality = authorization.speciality[0].name;
-  const Year = authorization.speciality[0].Year;
+  
+  const {specIndex} = req.params;
+  const speciality = authorization.speciality[specIndex].name;
+  const Year = authorization.speciality[specIndex].Year;
   const task = await Task.create({
     className,
     taskTitle,

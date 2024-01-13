@@ -54,8 +54,9 @@ const CreateAnnouncement = async (req, res) => {
 
 const GetAnnouncements = async (req, res) => {
   const authorization = req.user;
-  const speciality = authorization.speciality[0].name;
-  const Year = authorization.speciality[0].Year;
+  const {specIndex }= req.params;
+  const speciality = authorization.speciality[specIndex].name;
+  const Year = authorization.speciality[specIndex].Year;
   const announcements = await Announcement.find({ speciality, Year }).sort({
     createdAt: "desc",
   });

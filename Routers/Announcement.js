@@ -4,8 +4,8 @@ const { CreateAnnouncement ,GetAnnouncements,RemoveAnnouncement} = require("../C
 const router = express.Router()
 
 
-router.get('/:specIndex', GetAnnouncements)
-router.post('/create', CreateAnnouncement)
+router.get('/', GetAnnouncements)
+router.post('/create/:specIndex', CreateAnnouncement)
 router.delete('/:announcementid', RemoveAnnouncement)
 
 

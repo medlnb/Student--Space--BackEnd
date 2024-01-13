@@ -1,11 +1,11 @@
 const File = require("../Models/File");
 
 const CreateFile = async (req, res) => {
-  const { Module, Chapter, Link, DescriptionClass, ModuleDescription, title } =
+  const { Module, Chapter, Link, DescriptionClass, ModuleDescription, title,specIndex } =
     req.body;
   const authorization = req.user;
-  const speciality = authorization.speciality[0].name;
-  const Year = authorization.speciality[0].Year;
+  const speciality = authorization.speciality[specIndex].name;
+  const Year = authorization.speciality[specIndex].Year;
   const Teacher = authorization.username;
   if (!Module || !Chapter || !Teacher || !title || !speciality || !Year)
     return res.status(404).json({

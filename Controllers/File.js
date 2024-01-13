@@ -1,13 +1,19 @@
 const File = require("../Models/File");
 
 const CreateFile = async (req, res) => {
-  const {  Chapter, Link, DescriptionClass, ModuleDescription, title,specIndex } =
-    req.body;
+  const {
+    Chapter,
+    Link,
+    DescriptionClass,
+    ModuleDescription,
+    title,
+    specIndex,
+  } = req.body;
   const authorization = req.user;
   const speciality = authorization.speciality[specIndex].name;
   const Year = authorization.speciality[specIndex].Year;
   const Module = authorization.speciality[specIndex].Module;
-  
+
   const Teacher = authorization.username;
   if (!Module || !Chapter || !Teacher || !title || !speciality || !Year)
     return res.status(404).json({
@@ -31,11 +37,13 @@ const CreateFile = async (req, res) => {
 
 const GetModules = async (req, res) => {
   const FilePerPage = 2;
-  const authorization = req.user;
   const { p } = req.params;
-  const speciality = authorization.speciality[0].name;
-  const Year = authorization.speciality[0].Year;
-  const Page = p || 0;
+  const Page = p[0] || 0;
+  const specIndex = p[1];
+
+  const authorization = req.user;
+  const speciality = authorization.speciality[specIndex].name;
+  const Year = authorization.speciality[specIndex].Year;
   const Modules = await File.find({ speciality, Year })
     .skip(Page * FilePerPage)
     .limit(FilePerPage);

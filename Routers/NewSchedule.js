@@ -3,9 +3,9 @@ const { GetSchedule, createSchedule,updateSchedule } = require("../Controllers/N
 
 const router = express.Router()
 
-router.get('/', GetSchedule)
-router.post('/', createSchedule)
-router.patch('/', updateSchedule)
+router.get('/:specIndex', GetSchedule)
+router.post('/:specIndex', createSchedule) //not done yet in Client Side.
+router.patch('/:specIndex', updateSchedule)
 
 
 module.exports = router

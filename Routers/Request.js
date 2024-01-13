@@ -1,5 +1,5 @@
 const express = require("express")
-const RequireAuth = require("../Middlewares/RequireAuth")
+const RequireAuth = require("../Middleware/RequireAuth")
 const {
   CreateRequest,
   GetRequests,

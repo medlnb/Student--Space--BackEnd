@@ -24,9 +24,10 @@ async function sendTelegramMessage(token, channel, message) {
 
 const CreateAnnouncement = async (req, res) => {
   const { Content } = req.body;
+  const {specIndex} = req.params
   const authorization = req.user;
-  const Year = authorization.speciality[0].Year;
-  const speciality = authorization.speciality[0].name;
+  const Year = authorization.speciality[specIndex].Year;
+  const speciality = authorization.speciality[specIndex].name;
   const Publisher = authorization.username;
   const date = new Date();
 

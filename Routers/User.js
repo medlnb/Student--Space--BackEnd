@@ -7,9 +7,9 @@ const router = express.Router()
 router.post('/login', login)
 router.post('/admin', CreateAdmin)
 router.post('/teacher', CreateTeacher)
-router.get('/specs', GetSpecs)
 
 router.use(RequireAuth)
+router.get('/specs', GetSpecs)
 router.get('/teacher', getTeachers)
 router.patch('/teacher', AddTeacher)
 

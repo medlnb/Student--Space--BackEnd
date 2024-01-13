@@ -11,7 +11,7 @@ const router = express.Router()
 router.post('/', CreateRequest)
 
 router.use(RequireAuth)
-router.get('/', GetRequests)
+router.get('/:specIndex', GetRequests)
 router.post('/:_id', AccepteRequest)
 router.post('/reject/:_id', RejectRequest)
 

@@ -7,6 +7,7 @@ const File = require('./Routers/File')
 const Announcement = require('./Routers/Announcement')
 const NewSchedule = require('./Routers/NewSchedule')
 const Request = require('./Routers/Request')
+const RequireAuth = require("./Middleware/RequireAuth")
 
 require("dotenv").config()
 
@@ -16,6 +17,7 @@ app.use(express.json())
 app.use(cors())
 
 app.use("/api/user", Authrouter)
+app.use(RequireAuth)
 app.use("/api/task", Task)
 app.use("/api/file", File)
 app.use("/api/announcement", Announcement)

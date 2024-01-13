@@ -1,8 +1,10 @@
 const NewSchedule = require("../Models/NewSchedule")
 
 const GetSchedule = async (req, res) => {
-  const {Class, Group, Year} = req.body
-  const schedule = await NewSchedule.findOne({ Class, Group ,Year})
+  const authorization = req.user;
+  const Class =  authorization.speciality[0].name;
+  const Year = authorization.speciality[0].Year;
+  const schedule = await NewSchedule.findOne({ Class ,Year})
   
   if (!schedule)
     return res.status(401).json({ message: "Error getting the schedule" })
@@ -11,16 +13,22 @@ const GetSchedule = async (req, res) => {
 }
 
 const updateSchedule = async (req, res) => {
-  const classgroupyear = req.params.classgroupyear
-  const [Class, Group, Year] = classgroupyear.split("~~~")
+  const authorization = req.user;
+  const Class =  authorization.speciality[0].name;
+  const Year = authorization.speciality[0].Year;
   
-  await NewSchedule.deleteMany({Class, Group,Year})
+  await NewSchedule.deleteOne({Class,Year})
   createSchedule(req,res)
 }
 
 const createSchedule = async (req, res) => {
-  const {Class,Group, modules, Classrooms, types,Year } = req.body
-  const newSchedule = await NewSchedule.create({ Class,Group,modules, Classrooms, types,Year })
+  const { modules, Classrooms, types } = req.body
+
+  const authorization = req.user;
+  const Class =  authorization.speciality[0].name;
+  const Year = authorization.speciality[0].Year;
+
+  const newSchedule = await NewSchedule.create({ Class,modules, Classrooms, types,Year })
   
   if (!newSchedule)
     return res.status(400).json({ message: "Error creating newSchedule" })

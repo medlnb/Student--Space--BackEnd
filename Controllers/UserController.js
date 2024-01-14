@@ -146,7 +146,7 @@ const GetSpecs = async (req, res) => {
       },
     });
 
-    if (!Specs || Specs.length === 0) {
+    if (!Specs) {
       return res.status(409).json({ err: "Failed Finding Teachers" });
     }
 

@@ -1,26 +1,31 @@
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
 
-const Schema = mongoose.Schema
+const Schema = mongoose.Schema;
 
 const NewScheduleSchema = new Schema({
-  Class: {
-    type:String
-  },
-  Group: {
-    type:String
-  },
   modules: {
-    type: [String]
+    type: [String],
+    required: true,
   },
   Classrooms: {
-    type: [String]
+    type: [String],
+    required: true,
   },
   types: {
-    type: [String]
+    type: [String],
+    required: true,
   },
   Year: {
-    type: String
-  }
-})
+    type: String,
+    required: true,
+  },
+  Class: {
+    type: String,
+    required: true,
+  },
+  Group: {
+    type: String,
+  },
+});
 
-module.exports = mongoose.model("NewSchedule" ,NewScheduleSchema)
+module.exports = mongoose.model("NewSchedule", NewScheduleSchema);

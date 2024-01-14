@@ -1,8 +1,17 @@
 const User = require("../Models/UserModel");
 const jwt = require("jsonwebtoken");
+const NewSchedule = require("../Models/NewSchedule");
 
 const CreateAdmin = async (req, res) => {
   const { username, email, password, speciality, Year, Module } = req.body;
+  const modules = (Classrooms = types = Array(36).fill(" "));
+  const newSchedule = await NewSchedule.create({
+    modules,
+    Classrooms,
+    types,
+    Year,
+    Class: speciality,
+  });
   const user = await User.create({
     username,
     email,
@@ -16,7 +25,8 @@ const CreateAdmin = async (req, res) => {
       },
     ],
   });
-  if (!user) return res.status(409).json({ err: "Failled creating Teacher" });
+  if (!user || !newSchedule)
+    return res.status(409).json({ err: "Failled creating Admin" });
   return res.status(200).json({
     username,
     email,
@@ -49,15 +59,19 @@ const CreateAdmin = async (req, res) => {
 const AddTeacher = async (req, res) => {
   const { email, Module } = req.body;
   const authorization = req.user;
-  const {specIndex} = req.params
+  const { specIndex } = req.params;
   const speciality = authorization.speciality[specIndex];
   const updatedUser = await User.updateOne(
     { email },
-    { $push: { speciality: {
-      name: speciality.name,
-      Year: speciality.Year,
-      Module,
-    } } }
+    {
+      $push: {
+        speciality: {
+          name: speciality.name,
+          Year: speciality.Year,
+          Module,
+        },
+      },
+    }
   );
   if (!updatedUser)
     return res.status(409).json({ err: "Failled Adding Teacher" });
@@ -80,7 +94,7 @@ const CreateTeacher = async (req, res) => {
 };
 const getTeachers = async (req, res) => {
   const authorization = req.user;
-  const {specIndex} = req.params
+  const { specIndex } = req.params;
   const speciality = authorization.speciality[specIndex];
   const Teachers = await User.find({
     speciality: {

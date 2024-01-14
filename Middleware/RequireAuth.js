@@ -9,7 +9,7 @@ const RequireAuth = async (req, res, next) => {
   const token = authorization.split(" ")[1]
   try {
     const uncryptedtoken = jwt.verify(token, process.env.SECRET)
-    req.user = { ...uncryptedtoken }
+    req.user = { ...uncryptedtoken }    
     next()
   } catch (err) {
     res.status(401).json("Request is not authorized")

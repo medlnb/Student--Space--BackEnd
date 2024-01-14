@@ -106,7 +106,7 @@ const getUsers = async (req, res) => {
   }).select("-_id -__v -password");
 
   if (!Users) return res.status(409).json({ err: "Failled Finding Users" });
-  return res.status(201).json(Teachers);
+  return res.status(201).json(Users);
 };
 
 const login = async (req, res) => {

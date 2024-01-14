@@ -10,7 +10,7 @@ router.post('/teacher', CreateTeacher)
 router.get('/specs', GetSpecs)
 
 router.use(RequireAuth)
-router.get('/teacher/:specIndex', getUsers)
+router.get('/users/:specIndex', getUsers)
 router.patch('/teacher/:specIndex', AddTeacher)
 
 

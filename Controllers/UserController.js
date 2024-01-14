@@ -4,7 +4,7 @@ const NewSchedule = require("../Models/NewSchedule");
 
 const CreateAdmin = async (req, res) => {
   const { username, email, password, speciality, Year, Module } = req.body;
-  const modules = (Classrooms = types = Array(36).fill(" "));
+  const modules = (Classrooms = types = Array(36).fill(""));
   const newSchedule = await NewSchedule.create({
     modules,
     Classrooms,

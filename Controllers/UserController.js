@@ -92,22 +92,20 @@ const CreateTeacher = async (req, res) => {
 
   return res.status(200).json({ username: "Dr. " + username });
 };
-const getTeachers = async (req, res) => {
+const getUsers = async (req, res) => {
   const authorization = req.user;
   const { specIndex } = req.params;
   const speciality = authorization.speciality[specIndex];
-  const Teachers = await User.find({
+  const Users = await User.find({
     speciality: {
       $elemMatch: {
         name: speciality.name,
         Year: speciality.Year,
-        Module: { $exists: true },
       },
     },
-  }).select("-_id -__v ");
+  }).select("-_id -__v -password");
 
-  if (!Teachers)
-    return res.status(409).json({ err: "Failled Finding Teacher" });
+  if (!Users) return res.status(409).json({ err: "Failled Finding Users" });
   return res.status(201).json(Teachers);
 };
 
@@ -170,6 +168,6 @@ module.exports = {
   CreateTeacher,
   CreateAdmin,
   GetSpecs,
-  getTeachers,
+  getUsers,
   AddTeacher,
 };

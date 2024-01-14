@@ -103,7 +103,7 @@ const getUsers = async (req, res) => {
         Year: speciality.Year,
       },
     },
-  }).select("-_id -__v -password");
+  }).select(" -__v -password");
 
   if (!Users) return res.status(409).json({ err: "Failled Finding Users" });
   return res.status(201).json(Users);

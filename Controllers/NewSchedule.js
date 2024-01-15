@@ -2,7 +2,8 @@ const NewSchedule = require("../Models/NewSchedule");
 
 const GetSchedule = async (req, res) => {
   const authorization = req.user;
-  const { specIndex } = req.params;
+  const { info } = req.params;
+  const specIndex = parseInt(info[0]);
   const Class = authorization.speciality[specIndex].name;
   const Year = authorization.speciality[specIndex].Year;
   const schedule = await NewSchedule.findOne({ Class, Year });

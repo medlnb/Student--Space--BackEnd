@@ -3,7 +3,7 @@ const { GetSchedule, createSchedule,updateSchedule } = require("../Controllers/N
 
 const router = express.Router()
 
-router.get('/:specIndex', GetSchedule)
+router.get('/:info', GetSchedule)
 router.post('/:specIndex', createSchedule) //not done yet in Client Side.
 router.patch('/:specIndex', updateSchedule)
 

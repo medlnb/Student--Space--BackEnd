@@ -80,7 +80,7 @@ const AddTeacher = async (req, res) => {
 
 const CreateTeacher = async (req, res) => {
   const { username, email, password } = req.body;
-  const exist = User.findOne(email);
+  const exist = User.findOne({ email });
   if (exist) return res.status(404).json({ err: "Email already used" });
   const user = await User.create({
     username: "Dr. " + username,

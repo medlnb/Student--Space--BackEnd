@@ -4,9 +4,10 @@ const GetSchedule = async (req, res) => {
   const authorization = req.user;
   const { info } = req.params;
   const specIndex = parseInt(info[0]);
+  const Group = info.substring(1);
   const Class = authorization.speciality[specIndex].name;
   const Year = authorization.speciality[specIndex].Year;
-  const schedule = await NewSchedule.findOne({ Class, Year });
+  const schedule = await NewSchedule.findOne({ Class, Year, Group });
 
   if (!schedule)
     return res.status(401).json({ message: "Error getting the schedule" });

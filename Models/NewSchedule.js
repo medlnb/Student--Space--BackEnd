@@ -25,7 +25,6 @@ const NewScheduleSchema = new Schema({
   },
   Group: {
     type: String,
-    required: true,
   },
 });
 

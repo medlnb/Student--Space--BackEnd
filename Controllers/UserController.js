@@ -17,7 +17,7 @@ const CreateAdmin = async (req, res) => {
       arrayOfEmptyDays,
     },
     Year,
-    Class: speciality,
+    Speciality: speciality,
     Group: "main",
   });
   const user = await User.create({

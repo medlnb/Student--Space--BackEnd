@@ -25,10 +25,10 @@ app.use("/api/file", File);
 app.use("/api/announcement", Announcement);
 app.use("/api/Schedule", Schedule);
 
-// mongoose.connect(process.env.MONGO_URI).then(() => {
-//   app.listen(process.env.PORT, () => {
-//     console.log(
-//       `Connected to the database and listening on port ${process.env.PORT}`
-//     );
-//   });
-// });
+mongoose.connect(process.env.MONGO_URI).then(() => {
+  app.listen(process.env.PORT, () => {
+    console.log(
+      `Connected to the database and listening on port ${process.env.PORT}`
+    );
+  });
+});

@@ -11,8 +11,7 @@ const CreateAdmin = async (req, res) => {
     dayID: i,
   }));
 
-  const newSchedule = await clear;
-  Schedule.create({
+  const newSchedule = await Schedule.create({
     Days: {
       arrayOfEmptyDays,
     },

@@ -1,14 +1,21 @@
 const User = require("../Models/UserModel");
 const jwt = require("jsonwebtoken");
-const NewSchedule = require("../Models/NewSchedule");
+const Schedule = require("../Models/Schedule");
 
 const CreateAdmin = async (req, res) => {
   const { username, email, password, speciality, Year, Module } = req.body;
-  const emptyStringsArray = Array(36).fill("");
-  const newSchedule = await NewSchedule.create({
-    modules: emptyStringsArray,
-    Classrooms: emptyStringsArray,
-    types: emptyStringsArray,
+  const arrayOfEmptyDays = Array.from({ length: 36 }, (_, i) => ({
+    Classname: "",
+    Type: "",
+    Classroom: "",
+    dayID: i,
+  }));
+
+  const newSchedule = await clear;
+  Schedule.create({
+    Days: {
+      arrayOfEmptyDays,
+    },
     Year,
     Class: speciality,
     Group: "main",

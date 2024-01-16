@@ -5,7 +5,7 @@ const Authrouter = require("./Routers/User");
 const Task = require("./Routers/Task");
 const File = require("./Routers/File");
 const Announcement = require("./Routers/Announcement");
-const NewSchedule = require("./Routers/NewSchedule");
+const Schedule = require("./Routers/Schedule");
 const Request = require("./Routers/Request");
 const RequireAuth = require("./Middleware/RequireAuth");
 require("dotenv").config();
@@ -23,7 +23,7 @@ app.use(RequireAuth);
 app.use("/api/task", Task);
 app.use("/api/file", File);
 app.use("/api/announcement", Announcement);
-app.use("/api/newSchedule", NewSchedule);
+app.use("/api/Schedule", Schedule);
 
 mongoose.connect(process.env.MONGO_URI).then(() => {
   app.listen(process.env.PORT, () => {

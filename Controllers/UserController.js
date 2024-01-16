@@ -5,20 +5,25 @@ const Schedule = require("../Models/Schedule");
 const CreateAdmin = async (req, res) => {
   const { username, email, password, speciality, Year, Module } = req.body;
   const arrayOfEmptyDays = Array.from({ length: 36 }, (_, i) => ({
-    Classname: "",
-    Type: "",
-    Classroom: "",
+    Classname: " ",
+    Type: " ",
+    Classroom: " ",
     dayID: i,
   }));
-
-  const newSchedule = await Schedule.create({
-    Days: {
-      arrayOfEmptyDays,
-    },
+  const existSchedule = await Schedule.findOne({
     Year,
     Speciality: speciality,
     Group: "main",
   });
+  if (existSchedule)
+    return res.status(409).json({ err: "Schedule already exist" });
+  const newSchedule = await Schedule.create({
+    Days: arrayOfEmptyDays,
+    Year,
+    Speciality: speciality,
+    Group: "main",
+  });
+
   const user = await User.create({
     username,
     email,

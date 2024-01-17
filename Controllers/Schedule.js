@@ -6,12 +6,12 @@ const GetSchedule = async (req, res) => {
   const Group = tableinfo.substring(1);
   const specIndex = tableinfo[0];
   const spec = req.user.speciality[specIndex];
-  const Class = spec.name;
+  const Speciality = spec.name;
   const Year = spec.Year;
-  const schedule = await Schedule.findOne({ Class, Year, Group });
+  const schedule = await Schedule.findOne({ Speciality, Year, Group });
 
   if (!schedule)
-    return res.status(401).json({ message: "Error getting the schedule" });
+    return res.status(404).json({ message: "Error getting the schedule" });
 
   return res.status(201).json(schedule);
 };

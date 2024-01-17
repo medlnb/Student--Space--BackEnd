@@ -39,8 +39,16 @@ const updateSchedule = async (req, res) => {
   const Class = spec.name;
   const Year = spec.Year;
 
-  await Schedule.deleteOne({ Class, Year, Group });
-  createSchedule(req, res);
+  const { Days } = req.body;
+  const newSchedule = await Schedule.findOneAndUpdate(
+    { Class, Year, Group },
+    Days
+  );
+
+  if (!newSchedule)
+    return res.status(400).json({ message: "Error updating newSchedule" });
+
+  return res.status(201).json({ message: "newSchedule updated" });
 };
 
 const createSchedule = async (req, res) => {

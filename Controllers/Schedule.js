@@ -62,6 +62,10 @@ const createSchedule = async (req, res) => {
   const Speciality = SpecialityInfo.name;
   const Year = SpecialityInfo.Year;
 
+  const exits = await Schedule.findone({ Speciality, Year, Group });
+  if (exits)
+    return res.status(400).json({ message: "Schedule already exists" });
+
   const newSchedule = await Schedule.create({
     Days,
     Speciality,

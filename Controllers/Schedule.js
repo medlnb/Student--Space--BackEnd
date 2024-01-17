@@ -40,9 +40,10 @@ const updateSchedule = async (req, res) => {
   const Year = spec.Year;
 
   const { Days } = req.body;
-  const newSchedule = await Schedule.findOneAndUpdate(
+
+  const newSchedule = await Schedule.updateOne(
     { Speciality, Year, Group },
-    Days
+    { Days }
   );
 
   if (!newSchedule)

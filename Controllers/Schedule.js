@@ -19,9 +19,9 @@ const GetSchedule = async (req, res) => {
 const GetGroupsSchedules = async (req, res) => {
   const specIndex = req.params.tableinfo;
   const spec = req.user.speciality[specIndex];
-  const Class = spec.name;
+  const Speciality = spec.name;
   const Year = spec.Year;
-  const schedule = await Schedule.find({ Class, Year });
+  const schedule = await Schedule.find({ Speciality, Year });
 
   if (!schedule)
     return res.status(401).json({ message: "Error getting the schedule" });
@@ -36,12 +36,12 @@ const updateSchedule = async (req, res) => {
   const Group = tableinfo.substring(1);
   const specIndex = tableinfo[0];
   const spec = req.user.speciality[specIndex];
-  const Class = spec.name;
+  const Speciality = spec.name;
   const Year = spec.Year;
 
   const { Days } = req.body;
   const newSchedule = await Schedule.findOneAndUpdate(
-    { Class, Year, Group },
+    { Speciality, Year, Group },
     Days
   );
 

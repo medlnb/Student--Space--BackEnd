@@ -90,19 +90,19 @@ const AddTeacher = async (req, res) => {
   return res.status(200).json({ email });
 };
 
-const CreateTeacher = async (req, res) => {
+const createUser = async (req, res) => {
   const { username, email, password } = req.body;
   const exist = await User.findOne({ email });
   if (exist) return res.status(404).json({ err: "Email already used" });
   const user = await User.create({
-    username: "Dr. " + username,
+    username: username,
     email,
     password,
     speciality: [],
   });
-  if (!user) return res.status(404).json({ err: "Failled creating Teacher" });
+  if (!user) return res.status(404).json({ err: "Failled creating User" });
 
-  return res.status(200).json({ username: "Dr. " + username });
+  return res.status(200).json({ username });
 };
 const getUsers = async (req, res) => {
   const authorization = req.user;
@@ -125,11 +125,10 @@ const login = async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
 
-  if (!user) return res.status(404).json({ MailErr: "Email does'nt exist" });
+  if (!user) return res.status(404).json({ err: "Email does'nt exist" });
 
-  // const unlocked = jwt.verify(token, process.env.SECRET)
   if (password !== user.password)
-    return res.status(404).json({ PwErr: "wrong password" });
+    return res.status(404).json({ err: "wrong password" });
 
   return res.status(201).json({
     username: user.username,
@@ -177,7 +176,7 @@ const GetSpecs = async (req, res) => {
 
 module.exports = {
   login,
-  CreateTeacher,
+  createUser,
   CreateAdmin,
   GetSpecs,
   getUsers,

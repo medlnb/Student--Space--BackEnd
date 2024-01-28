@@ -12,11 +12,11 @@ const {
 const router = express.Router();
 
 router.post("/login", login);
-router.post("/admin", CreateAdmin);
 router.post("/create", createUser);
 router.get("/specs", GetSpecs);
 
 router.use(RequireAuth);
+router.post("/admin", CreateAdmin);
 router.get("/users/:specIndex", getUsers);
 router.patch("/teacher/:specIndex", AddTeacher);
 

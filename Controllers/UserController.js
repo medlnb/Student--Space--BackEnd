@@ -3,13 +3,15 @@ const jwt = require("jsonwebtoken");
 const Schedule = require("../Models/Schedule");
 
 const CreateAdmin = async (req, res) => {
-  const { username, email, password, speciality, Year, Module } = req.body;
+  const { speciality, Year } = req.body;
+
   const arrayOfEmptyDays = Array.from({ length: 36 }, (_, i) => ({
     Classname: " ",
     Type: " ",
     Classroom: " ",
     dayID: i,
   }));
+
   const existSchedule = await Schedule.findOne({
     Year,
     Speciality: speciality,
@@ -17,6 +19,7 @@ const CreateAdmin = async (req, res) => {
   });
   if (existSchedule)
     return res.status(409).json({ err: "Schedule already exist" });
+
   const newSchedule = await Schedule.create({
     Days: arrayOfEmptyDays,
     Year,
@@ -24,48 +27,23 @@ const CreateAdmin = async (req, res) => {
     Group: "main",
   });
 
-  const user = await User.create({
-    username,
-    email,
-    password,
-    speciality: [
-      {
-        name: speciality,
-        Admin: true,
-        Year,
-        Module,
+  const { email } = req.user;
+  const updatedUser = await User.updateOne(
+    { email },
+    {
+      $push: {
+        speciality: {
+          name: speciality,
+          Year,
+          Admin: true,
+        },
       },
-    ],
-  });
-  if (!user || !newSchedule)
+    }
+  );
+
+  if (!updatedUser || !newSchedule)
     return res.status(409).json({ err: "Failled creating Admin" });
-  return res.status(200).json({
-    username,
-    email,
-    speciality: [
-      {
-        name: speciality,
-        Admin: true,
-        Year,
-        Module,
-      },
-    ],
-    token: jwt.sign(
-      {
-        username,
-        email,
-        speciality: [
-          {
-            name: speciality,
-            Admin: true,
-            Year,
-            Module,
-          },
-        ],
-      },
-      process.env.SECRET
-    ),
-  });
+  return res.status(200).json({ msg: "Speciality Created" });
 };
 
 const AddTeacher = async (req, res) => {

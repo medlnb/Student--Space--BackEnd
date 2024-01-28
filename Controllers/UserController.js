@@ -18,7 +18,7 @@ const CreateAdmin = async (req, res) => {
     Group: "main",
   });
   if (existSchedule)
-    return res.status(409).json({ err: "Schedule already exist" });
+    return res.status(409).json({ err: "Speciality already exist" });
 
   const newSchedule = await Schedule.create({
     Days: arrayOfEmptyDays,
@@ -42,8 +42,19 @@ const CreateAdmin = async (req, res) => {
   );
 
   if (!updatedUser || !newSchedule)
-    return res.status(409).json({ err: "Failled creating Admin" });
-  return res.status(200).json({ msg: "Speciality Created" });
+    return res.status(409).json({ err: "Failled creating Speciality" });
+
+  const user = await find({ email }).select("-_id -password -__v");
+  return res.status(200).json({
+    token: jwt.sign(
+      {
+        username: user.username,
+        email,
+        speciality: user.speciality,
+      },
+      process.env.SECRET
+    ),
+  });
 };
 
 const AddTeacher = async (req, res) => {

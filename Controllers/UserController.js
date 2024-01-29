@@ -44,8 +44,10 @@ const CreateAdmin = async (req, res) => {
   if (!updatedUser || !newSchedule)
     return res.status(409).json({ err: "Failled creating Speciality" });
 
-  const user = await find({ email }).select("-_id -password -__v");
-  return res.status(200).json({
+  const user = await User.findOne({ email }).select("-_id -password -__v");
+  console.log(user);
+  return res.status(201).json({
+    speciality: user.speciality,
     token: jwt.sign(
       {
         username: user.username,

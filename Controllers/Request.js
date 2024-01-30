@@ -29,12 +29,12 @@ const GetRequests = async (req, res) => {
   try {
     const authorization = req.user;
     const { specIndex } = req.params;
-    const name = authorization.speciality[specIndex].name;
+    const Speciality = authorization.speciality[specIndex].name;
     const Year = authorization.speciality[specIndex].Year;
 
     const requests = await Request.find({
-      "Speciality.name": name,
-      "Speciality.Year": Year,
+      Speciality,
+      Year,
     });
 
     if (!requests)

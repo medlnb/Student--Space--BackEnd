@@ -18,9 +18,6 @@ const UserSchema = new Schema({
   speciality: {
     type: [
       {
-        Admin: {
-          type: Boolean,
-        },
         name: {
           type: String,
           required: true,
@@ -31,7 +28,10 @@ const UserSchema = new Schema({
         },
         Module: {
           type: String,
-        }
+        },
+        Admin: {
+          type: Boolean,
+        },
       },
     ],
     required: true,

@@ -47,61 +47,58 @@ const GetRequests = async (req, res) => {
 };
 
 const AccepteRequest = async (req, res) => {
+  const { _id } = req.params;
+  const request = await Request.findOne({ _id });
+  const { email, Year, Speciality } = request;
+  const user = await User.findOne({ email });
+
+  // const transporter = nodemailer.createTransport({
+  //   service: "gmail",
+  //   auth: {
+  //     user: "mohamedlanabi0@gmail.com",
+  //     pass: "rddv gnyx ptrd qtkl",
+  //   },
+  // });
+
+  // const mailOptions = {
+  //   from: "mohamedlanabi0@gmail.com",
+  //   to: email,
+  //   subject:
+  //     "Welcome to Student's Space! Your Account Request has been Approved 🎉",
+  //   text: `Salam ${lastname} ${firstname},
+  //     We hope this email finds you well. We are pleased to inform you that your request to use Student\'s Space has been accepted! Welcome aboard!
+
+  //     Your Account Details:
+
+  //     mail: ${email}
+  //     Password: ${password}
+  //     Please keep your login details secure and do not share them with anyone.
+  //     If you have any questions or encounter any issues while accessing your account,
+  //     feel free to reach out to our support team at lanabi.mohamed@univ-ouargla.dz.
+
+  //     We are excited to have you as part of our community.
+  //     Explore, engage, and make the most of your experience!
+
+  //     Best regards,
+  //     Lanabi Mohamed
+  //     `,
+  // };
+
   try {
-    const { _id } = req.params;
-    const request = await Request.findOne({ _id });
-    const { firstname, lastname, mail, password, Speciality } = request;
-
-    const user = await User.findOne({ email: mail });
-    if (user) return res.status(401).json({ err: "u alrddy have an acc!" });
-
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: "mohamedlanabi0@gmail.com",
-        pass: "rddv gnyx ptrd qtkl",
-      },
-    });
-
-    const mailOptions = {
-      from: "mohamedlanabi0@gmail.com",
-      to: mail,
-      subject:
-        "Welcome to Student's Space! Your Account Request has been Approved 🎉",
-      text: `Salam ${lastname} ${firstname},
-        We hope this email finds you well. We are pleased to inform you that your request to use Student\'s Space has been accepted! Welcome aboard!
-
-        Your Account Details:
-
-        mail: ${mail}
-        Password: ${password}
-        Please keep your login details secure and do not share them with anyone.
-        If you have any questions or encounter any issues while accessing your account,
-        feel free to reach out to our support team at lanabi.mohamed@univ-ouargla.dz.
-
-        We are excited to have you as part of our community.
-        Explore, engage, and make the most of your experience!
-
-        Best regards,
-        Lanabi Mohamed
-        `,
-    };
-
-    try {
-      await transporter.sendMail(mailOptions);
-      await User.create({
-        email: mail,
-        password,
-        username: firstname + " " + lastname,
-        speciality: [Speciality],
+    // await transporter.sendMail(mailOptions);
+    if (user) {
+      user.speciality.push({
+        name: Speciality,
+        Year,
+        Group: "main",
       });
-      res.status(201).json({ mail });
-    } catch (error) {
-      res.status(500).send("Failed to send email!");
-    }
+
+      await user.save();
+    } else return res.status(404).send({ err: "Can't find this user!" });
     await Request.deleteOne({ _id });
+    return res.status(201).json({ msg: "Request Accepted & Mail Sended" });
   } catch (error) {
-    return res.status(500).json({ msg: "Error Accepting the request!" });
+    return res.status(500).send({ err: "Failed to accept the request!" });
   }
 };
 

@@ -31,11 +31,7 @@ const UserSchema = new Schema({
         },
         Module: {
           type: String,
-        },
-        Group: {
-          type: [String] || String,
-          required: true,
-        },
+        }
       },
     ],
     required: true,

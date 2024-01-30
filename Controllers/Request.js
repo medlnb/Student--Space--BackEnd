@@ -3,21 +3,22 @@ const User = require("../Models/UserModel");
 const nodemailer = require("nodemailer");
 
 const CreateRequest = async (req, res) => {
-  const { matricule, mail, firstname, lastname, Speciality, password } =
-    req.body;
-  const exists = await Request.findOne({ mail });
-  if (exists) return res.status(409).json({ err: "This Email allrddy exists" });
-  const exist = await Request.findOne({ matricule });
+  const { Speciality, Year } = req.body;
+  const { email, username } = req.user;
+  const exist = await Request.findOne({ email, Speciality, Year });
+
   if (exist)
-    return res.status(409).json({ err: "This Matricule allrddy exists" });
+    return res
+      .status(409)
+      .json({ err: "U've already send a request to this Speciality" });
+
   const request = await Request.create({
-    matricule,
-    mail,
-    firstname,
-    lastname,
+    email,
+    username,
     Speciality,
-    password,
+    Year,
   });
+
   if (!request) return res.status(404).json({ err: "Error creating Student!" });
   return res
     .status(201)
@@ -30,19 +31,17 @@ const GetRequests = async (req, res) => {
     const { specIndex } = req.params;
     const name = authorization.speciality[specIndex].name;
     const Year = authorization.speciality[specIndex].Year;
-    const requests = await Request.find(
-      {
-        "Speciality.name": name,
-        "Speciality.Year": Year,
-      },
-      { password: 0, __v: 0 }
-    );
+
+    const requests = await Request.find({
+      "Speciality.name": name,
+      "Speciality.Year": Year,
+    });
+
     if (!requests)
       return res.status(404).json({ msg: "Error getting requests!" });
 
     return res.status(200).json(requests);
   } catch (error) {
-    console.log(error);
     return res.status(500).json({ msg: "Error getting requests!" });
   }
 };

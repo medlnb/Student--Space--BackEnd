@@ -1,5 +1,4 @@
 const express = require("express")
-const RequireAuth = require("../Middleware/RequireAuth")
 const {
   CreateRequest,
   GetRequests,
@@ -8,9 +7,8 @@ const {
 }= require("../Controllers/Request")
 
 const router = express.Router()
-router.post('/', CreateRequest)
 
-router.use(RequireAuth)
+router.post('/', CreateRequest)
 router.get('/:specIndex', GetRequests)
 router.post('/:_id', AccepteRequest)
 router.post('/reject/:_id', RejectRequest)

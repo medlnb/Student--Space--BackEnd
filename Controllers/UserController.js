@@ -45,7 +45,6 @@ const CreateAdmin = async (req, res) => {
     return res.status(409).json({ err: "Failled creating Speciality" });
 
   const user = await User.findOne({ email }).select("-_id -password -__v");
-  console.log(user);
   return res.status(201).json({
     speciality: user.speciality,
     token: jwt.sign(

@@ -3,21 +3,11 @@ const mongoose = require("mongoose")
 const Schema = mongoose.Schema
 
 const RequestSchema = new Schema({
-  matricule: {
+  email: {
     type: String,
     required: true,
-    unique:true
   },
-  mail: {
-    type: String,
-    required: true,
-    unique: true
-  },
-  firstname: {
-    type: String,
-    required: true
-  },
-  lastname: {
+  username: {
     type: String,
     required: true
   },
@@ -25,7 +15,7 @@ const RequestSchema = new Schema({
     type: Object,
     required: true
   },
-  password:{
+  Year:{
     type: String,
     required: true
   }

@@ -21,6 +21,7 @@ const GetGroupsSchedules = async (req, res) => {
   const spec = req.user.speciality[specIndex];
   const Speciality = spec.name;
   const Year = spec.Year;
+  
   const schedule = await Schedule.find({ Speciality, Year });
 
   if (!schedule)

@@ -16,10 +16,9 @@ app.use(express.json());
 app.use(cors());
 
 app.use("/api/user", Authrouter);
-app.use("/api/request", Request);
 
 app.use(RequireAuth);
-
+app.use("/api/request", Request);
 app.use("/api/task", Task);
 app.use("/api/file", File);
 app.use("/api/announcement", Announcement);

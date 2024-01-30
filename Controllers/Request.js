@@ -105,47 +105,47 @@ const AccepteRequest = async (req, res) => {
 const RejectRequest = async (req, res) => {
   const { _id } = req.params;
   const request = await Request.findOne({ _id });
-  const { firstname, lastname, mail } = request;
+  const { email } = request;
 
-  const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-      user: "mohamedlanabi0@gmail.com",
-      pass: "rddv gnyx ptrd qtkl",
-    },
-  });
+  // const transporter = nodemailer.createTransport({
+  //   service: "gmail",
+  //   auth: {
+  //     user: "mohamedlanabi0@gmail.com",
+  //     pass: "rddv gnyx ptrd qtkl",
+  //   },
+  // });
 
-  const mailOptions = {
-    from: "mohamedlanabi0@gmail.com",
-    to: mail,
-    subject: "Regarding Your Student's Space Request",
-    text: `Salam ${lastname} ${firstname},
+  // const mailOptions = {
+  //   from: "mohamedlanabi0@gmail.com",
+  //   to: mail,
+  //   subject: "Regarding Your Student's Space Request",
+  //   text: `Salam ${lastname} ${firstname},
 
-          I trust this message finds you well.
-          We appreciate your interest in Student's Space and the time you took to submit your request.
-          After careful consideration,
-          we regret to inform you that your request to use Student's Space has not been accepted at this time.
+  //         I trust this message finds you well.
+  //         We appreciate your interest in Student's Space and the time you took to submit your request.
+  //         After careful consideration,
+  //         we regret to inform you that your request to use Student's Space has not been accepted at this time.
 
-          We understand that this news may be disappointing,
-          and we want to assure you that this decision was not made lightly. 
-          If you have any specific concerns or questions regarding the rejection, 
-          please do not hesitate to reach out to our support team at lanabi.mohamed@univ-ouargla.dz.
-          They will be happy to provide any necessary clarification.
+  //         We understand that this news may be disappointing,
+  //         and we want to assure you that this decision was not made lightly.
+  //         If you have any specific concerns or questions regarding the rejection,
+  //         please do not hesitate to reach out to our support team at lanabi.mohamed@univ-ouargla.dz.
+  //         They will be happy to provide any necessary clarification.
 
-          Thank you for your understanding, and we wish you the best in your endeavors.
+  //         Thank you for your understanding, and we wish you the best in your endeavors.
 
-          Best regards,
-          Lanabi Mohamed
-        `,
-  };
+  //         Best regards,
+  //         Lanabi Mohamed
+  //       `,
+  // };
 
   try {
-    await transporter.sendMail(mailOptions);
+    // await transporter.sendMail(mailOptions);
     await Request.deleteOne({ _id });
-    res.status(201).json({ msg: `${mail} rejected.` });
+    res.status(201).json({ msg: `${email} rejected.` });
   } catch (error) {
     console.log(error);
-    res.status(500).send("Failed to send email!");
+    res.status(500).json({ err: "Failed to send email!" });
   }
 };
 

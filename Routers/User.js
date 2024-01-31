@@ -13,9 +13,9 @@ const router = express.Router();
 
 router.post("/login", login);
 router.post("/create", createUser);
-router.get("/specs", GetSpecs);
 
 router.use(RequireAuth);
+router.get("/specs", GetSpecs);
 router.post("/admin", CreateAdmin);
 router.get("/users/:specIndex", getUsers);
 router.patch("/teacher/:specIndex", AddTeacher);

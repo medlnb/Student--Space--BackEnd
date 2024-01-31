@@ -1,30 +1,21 @@
 const Announcement = require("../Models/Announcement");
 
 async function sendTelegramMessage(token, channel, message) {
-  try {
-    // Construct the Telegram API endpoint for sending a message
-    const request = await fetch(
-      `https://api.telegram.org/bot${token}/sendMessage?chat_id=${channel}&text=${message}`,
-      {
-        method: "GET",
-        redirect: "follow",
-      }
-    );
+  const request = await fetch(
+    `https://api.telegram.org/bot${token}/sendMessage?chat_id=${channel}&text=${message}`,
+    {
+      method: "GET",
+      redirect: "follow",
+    }
+  );
 
-    // Parse the JSON response from the Telegram API
-    const response = await request.json();
-
-    // Return the response object
-    return response;
-  } catch (error) {
-    // Handle errors by logging them to the console
-    console.error("Error:", error);
-  }
+  const response = await request.json();
+  return response;
 }
 
 const CreateAnnouncement = async (req, res) => {
-  const { Content } = req.body;
-  const {specIndex} = req.params
+  const { Content, Channel } = req.body;
+  const { specIndex } = req.params;
   const authorization = req.user;
   const Year = authorization.speciality[specIndex].Year;
   const speciality = authorization.speciality[specIndex].name;
@@ -44,17 +35,16 @@ const CreateAnnouncement = async (req, res) => {
 
   await sendTelegramMessage(
     process.env.TOKEN,
-    process.env.CHANNEL,
+    Channel,
     `New Announcement from ${announcement.Publisher}:
     \n${Content}`
   );
   return res.status(201).json(announcement);
 };
 
-
 const GetAnnouncements = async (req, res) => {
   const authorization = req.user;
-  const {specIndex }= req.params;
+  const { specIndex } = req.params;
   const speciality = authorization.speciality[specIndex].name;
   const Year = authorization.speciality[specIndex].Year;
   const announcements = await Announcement.find({ speciality, Year }).sort({
@@ -63,20 +53,19 @@ const GetAnnouncements = async (req, res) => {
   if (!announcements)
     return res.status(404).json({ err: "Error Getting the Announcements" });
   return res.status(201).json(announcements);
-}
-
+};
 
 const RemoveAnnouncement = async (req, res) => {
-  const announcementid = req.params.announcementid
-  const exist = await Announcement.deleteOne({ _id: announcementid })
+  const announcementid = req.params.announcementid;
+  const exist = await Announcement.deleteOne({ _id: announcementid });
 
   if (!exist)
-    return res.status(401).json({ err: "Error removing a announcement" })
+    return res.status(401).json({ err: "Error removing a announcement" });
 
-  return res.status(201).json({ msg: "Announcement removed" })
-}
+  return res.status(201).json({ msg: "Announcement removed" });
+};
 module.exports = {
   CreateAnnouncement,
   GetAnnouncements,
   RemoveAnnouncement,
-}
+};

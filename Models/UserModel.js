@@ -32,6 +32,9 @@ const UserSchema = new Schema({
         Admin: {
           type: Boolean,
         },
+        Channel: {
+          type: String,
+        },
       },
     ],
     required: true,

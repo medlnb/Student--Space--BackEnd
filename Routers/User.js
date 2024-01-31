@@ -7,6 +7,7 @@ const {
   GetSpecs,
   getUsers,
   AddTeacher,
+  ChangeChannel,
 } = require("../Controllers/UserController");
 
 const router = express.Router();
@@ -19,5 +20,6 @@ router.get("/specs", GetSpecs);
 router.post("/admin", CreateAdmin);
 router.get("/users/:specIndex", getUsers);
 router.patch("/teacher/:specIndex", AddTeacher);
+router.patch("/channel/:specIndex", ChangeChannel);
 
 module.exports = router;

@@ -58,6 +58,34 @@ const CreateAdmin = async (req, res) => {
   });
 };
 
+const ChangeChannel = async (req, res) => {
+  const { Channel } = req.body;
+  const authorization = req.user;
+  const { specIndex } = req.params;
+  const speciality = authorization.speciality[specIndex];
+
+  const updatedUser = await User.updateOne(
+    {
+      email:authorization.email,
+      speciality: {
+        $elemMatch: {
+          name: speciality.name,
+          Year: speciality.Year,
+          Admin: true,
+        },
+      },
+    },
+    {
+      $set: {
+        "speciality.$.Channel": Channel,
+      },
+    }
+  );
+  if (!updatedUser)
+    return res.status(409).json({ err: "Failed setting Channel" });
+  return res.status(200).json({ msg: "Channel setted" });
+};
+
 const AddTeacher = async (req, res) => {
   const { email, Module } = req.body;
   const authorization = req.user;
@@ -171,4 +199,5 @@ module.exports = {
   GetSpecs,
   getUsers,
   AddTeacher,
+  ChangeChannel,
 };

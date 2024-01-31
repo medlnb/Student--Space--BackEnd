@@ -1,25 +1,15 @@
 const Task = require("../Models/Task");
 
 async function sendTelegramMessage(token, channel, message) {
-  try {
-    // Construct the Telegram API endpoint for sending a message
-    const request = await fetch(
-      `https://api.telegram.org/bot${token}/sendMessage?chat_id=${channel}&text=${message}`,
-      {
-        method: "GET",
-        redirect: "follow",
-      }
-    );
-
-    // Parse the JSON response from the Telegram API
-    const response = await request.json();
-
-    // Return the response object
-    return response;
-  } catch (error) {
-    // Handle errors by logging them to the console
-    console.error("Error:", error);
-  }
+  const request = await fetch(
+    `https://api.telegram.org/bot${token}/sendMessage?chat_id=${channel}&text=${message}`,
+    {
+      method: "GET",
+      redirect: "follow",
+    }
+  );
+  const response = await request.json();
+  return response;
 }
 
 function calculateTimeLeft(deadline) {
@@ -40,7 +30,7 @@ function calculateTimeLeft(deadline) {
 
 const getTasks = async (req, res) => {
   const authorization = req.user;
-  const {specIndex} = req.params;
+  const { specIndex } = req.params;
   const speciality = authorization.speciality[specIndex].name;
   const Year = authorization.speciality[specIndex].Year;
 
@@ -53,11 +43,11 @@ const getTasks = async (req, res) => {
 };
 
 const createTask = async (req, res) => {
-  const { taskTitle, deadLine, Description, Link } = req.body;
+  const { taskTitle, deadLine, Description, Link, Channel } = req.body;
   const authorization = req.user;
   const className = authorization.username;
-  
-  const {specIndex} = req.params;
+
+  const { specIndex } = req.params;
   const speciality = authorization.speciality[specIndex].name;
   const Year = authorization.speciality[specIndex].Year;
   const task = await Task.create({
@@ -74,7 +64,7 @@ const createTask = async (req, res) => {
 
   await sendTelegramMessage(
     process.env.TOKEN,
-    process.env.CHANNEL,
+    Channel,
     `New task from ${className}:
     \n${taskTitle}`
   );

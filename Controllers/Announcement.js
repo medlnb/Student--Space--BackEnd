@@ -1,4 +1,5 @@
 const Announcement = require("../Models/Announcement");
+const User = require("../Models/UserModel");
 
 async function sendTelegramMessage(token, channel, message) {
   const request = await fetch(
@@ -14,13 +15,28 @@ async function sendTelegramMessage(token, channel, message) {
 }
 
 const CreateAnnouncement = async (req, res) => {
-  const { Content, Channel } = req.body;
+  const { Content } = req.body;
   const { specIndex } = req.params;
   const authorization = req.user;
   const Year = authorization.speciality[specIndex].Year;
   const speciality = authorization.speciality[specIndex].name;
   const Publisher = authorization.username;
   const date = new Date();
+
+  const admin = await User.findOne(
+    {
+      speciality: {
+        $elemMatch: {
+          name: speciality,
+          Year,
+          Admin: true,
+        },
+      },
+    },
+    {
+      "speciality.$": 1,
+    }
+  );
 
   const announcement = await Announcement.create({
     Publisher,
@@ -35,7 +51,7 @@ const CreateAnnouncement = async (req, res) => {
 
   await sendTelegramMessage(
     process.env.TOKEN,
-    Channel,
+    admin.speciality[0].Channel,
     `New Announcement from ${announcement.Publisher}:
     \n${Content}`
   );

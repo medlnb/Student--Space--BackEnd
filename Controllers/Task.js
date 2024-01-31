@@ -1,4 +1,5 @@
 const Task = require("../Models/Task");
+const User = require("../Models/UserModel");
 
 async function sendTelegramMessage(token, channel, message) {
   const request = await fetch(
@@ -43,13 +44,29 @@ const getTasks = async (req, res) => {
 };
 
 const createTask = async (req, res) => {
-  const { taskTitle, deadLine, Description, Link, Channel } = req.body;
+  const { taskTitle, deadLine, Description, Link } = req.body;
   const authorization = req.user;
   const className = authorization.username;
 
   const { specIndex } = req.params;
   const speciality = authorization.speciality[specIndex].name;
   const Year = authorization.speciality[specIndex].Year;
+
+  const admin = await User.findOne(
+    {
+      speciality: {
+        $elemMatch: {
+          name: speciality,
+          Year,
+          Admin: true,
+        },
+      },
+    },
+    {
+      "speciality.$": 1,
+    }
+  );
+
   const task = await Task.create({
     className,
     taskTitle,
@@ -64,7 +81,7 @@ const createTask = async (req, res) => {
 
   await sendTelegramMessage(
     process.env.TOKEN,
-    Channel,
+    admin.speciality[0].Channel,
     `New task from ${className}:
     \n${taskTitle}`
   );

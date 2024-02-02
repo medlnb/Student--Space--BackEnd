@@ -12,6 +12,17 @@ const CreateRequest = async (req, res) => {
       .status(409)
       .json({ err: "U've already send a request to this Speciality" });
 
+  const existUser = await User.findOne({
+    email,
+    speciality: {
+      $elemMatch: {
+        name: Speciality,
+        Year,
+      },
+    },
+  });
+  if (existUser) return res.status(409).json({ err: "U r already Added" });
+
   const request = await Request.create({
     email,
     username,

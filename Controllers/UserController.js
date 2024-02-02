@@ -66,7 +66,7 @@ const ChangeChannel = async (req, res) => {
 
   const updatedUser = await User.updateOne(
     {
-      email:authorization.email,
+      email: authorization.email,
       speciality: {
         $elemMatch: {
           name: speciality.name,
@@ -192,6 +192,12 @@ const GetSpecs = async (req, res) => {
   }
 };
 
+const GetVersion = async (req, res) => {
+  const { email } = req.user;
+  const version = await User.findOne({ email }).select("__v");
+  return res.status(200).json({ version });
+};
+
 module.exports = {
   login,
   createUser,
@@ -200,4 +206,5 @@ module.exports = {
   getUsers,
   AddTeacher,
   ChangeChannel,
+  GetVersion,
 };

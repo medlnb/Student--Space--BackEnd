@@ -195,8 +195,21 @@ const GetSpecs = async (req, res) => {
 
 const GetVersion = async (req, res) => {
   const { email } = req.user;
-  const version = await User.findOne({ email }).select("__v -_id");
-  return res.status(200).json({ version });
+  const user = await User.findOne({ email });
+  return res.status(201).json({
+    username: user.username,
+    email,
+    speciality: user.speciality,
+    __v: user.__v,
+    token: jwt.sign(
+      {
+        username: user.username,
+        email,
+        speciality: user.speciality,
+      },
+      process.env.SECRET
+    ),
+  });
 };
 
 module.exports = {

@@ -195,7 +195,7 @@ const GetSpecs = async (req, res) => {
 
 const GetVersion = async (req, res) => {
   const { email } = req.user;
-  const version = await User.findOne({ email }).select("__v");
+  const version = await User.findOne({ email }).select("__v -_id");
   return res.status(200).json({ version });
 };
 

@@ -152,6 +152,7 @@ const login = async (req, res) => {
     username: user.username,
     email,
     speciality: user.speciality,
+    __v: user.__v,
     token: jwt.sign(
       {
         username: user.username,

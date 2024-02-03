@@ -28,22 +28,22 @@ const CreateAdmin = async (req, res) => {
   );
   
 
-  const arrayOfEmptyDays = Array.from({ length: 36 }, (_, i) => ({
-    Classname: " ",
-    Type: " ",
-    Classroom: " ",
-    dayID: i,
-  }));
+  // const arrayOfEmptyDays = Array.from({ length: 36 }, (_, i) => ({
+  //   Classname: " ",
+  //   Type: " ",
+  //   Classroom: " ",
+  //   dayID: i,
+  // }));
 
-  const newSchedule = await Schedule.create({
-    Days: arrayOfEmptyDays,
-    Year,
-    Speciality: speciality,
-    Group: "main",
-  });
+  // const newSchedule = await Schedule.create({
+  //   Days: arrayOfEmptyDays,
+  //   Year,
+  //   Speciality: speciality,
+  //   Group: "main",
+  // });
 
-  if (!updatedUser || !newSchedule)
-    return res.status(409).json({ err: "Failled creating Speciality" });
+  // if (!updatedUser || !newSchedule)
+  //   return res.status(409).json({ err: "Failled creating Speciality" });
 
   return res.status(201).json({ msg: "Speciality Created" });
 };

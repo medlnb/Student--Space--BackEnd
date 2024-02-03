@@ -13,37 +13,43 @@ const CreateAdmin = async (req, res) => {
   if (existSchedule)
     return res.status(409).json({ err: "Speciality already exist" });
 
-  const { email } = req.user;
-  const updatedUser = await User.updateOne(
-    { email },
-    {
-      $push: {
-        speciality: {
-          name: speciality,
-          Year,
-          Admin: true,
-        },
-      },
-    }
-  );
-  
+  const user = req.user;
+  // const updatedUser = await User.updateOne(
+  //   { email },
+  //   {
+  //     $push: {
+  //       speciality: {
+  //         name: speciality,
+  //         Year,
+  //         Admin: true,
+  //       },
+  //     },
+  //   }
+  // );
+  user.speciality.push({
+    name: speciality,
+    Year,
+    Admin: true,
+  });
 
-  // const arrayOfEmptyDays = Array.from({ length: 36 }, (_, i) => ({
-  //   Classname: " ",
-  //   Type: " ",
-  //   Classroom: " ",
-  //   dayID: i,
-  // }));
+  await user.save();
 
-  // const newSchedule = await Schedule.create({
-  //   Days: arrayOfEmptyDays,
-  //   Year,
-  //   Speciality: speciality,
-  //   Group: "main",
-  // });
+  const arrayOfEmptyDays = Array.from({ length: 36 }, (_, i) => ({
+    Classname: " ",
+    Type: " ",
+    Classroom: " ",
+    dayID: i,
+  }));
 
-  // if (!updatedUser || !newSchedule)
-  //   return res.status(409).json({ err: "Failled creating Speciality" });
+  const newSchedule = await Schedule.create({
+    Days: arrayOfEmptyDays,
+    Year,
+    Speciality: speciality,
+    Group: "main",
+  });
+
+  if (!updatedUser || !newSchedule)
+    return res.status(409).json({ err: "Failled creating Speciality" });
 
   return res.status(201).json({ msg: "Speciality Created" });
 };

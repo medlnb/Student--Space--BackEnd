@@ -26,6 +26,7 @@ const CreateAdmin = async (req, res) => {
       },
     }
   );
+  
 
   const arrayOfEmptyDays = Array.from({ length: 36 }, (_, i) => ({
     Classname: " ",

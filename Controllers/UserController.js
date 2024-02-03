@@ -15,14 +15,13 @@ const CreateAdmin = async (req, res) => {
 
   const { email } = req.user;
   const user = await User.findOne({ email });
-
   user.speciality.push({
     name: speciality,
     Year,
     Admin: true,
   });
 
-  await user.save();
+  const updatedUser = await user.save();
 
   const arrayOfEmptyDays = Array.from({ length: 36 }, (_, i) => ({
     Classname: " ",
@@ -38,7 +37,7 @@ const CreateAdmin = async (req, res) => {
     Group: "main",
   });
 
-  if (!newSchedule)
+  if (!updatedUser || !newSchedule)
     return res.status(409).json({ err: "Failled creating Speciality" });
 
   return res.status(201).json({ msg: "Speciality Created" });

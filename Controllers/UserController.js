@@ -13,19 +13,9 @@ const CreateAdmin = async (req, res) => {
   if (existSchedule)
     return res.status(409).json({ err: "Speciality already exist" });
 
-  const user = req.user;
-  // const updatedUser = await User.updateOne(
-  //   { email },
-  //   {
-  //     $push: {
-  //       speciality: {
-  //         name: speciality,
-  //         Year,
-  //         Admin: true,
-  //       },
-  //     },
-  //   }
-  // );
+  const { email } = req.user;
+  const user = await User.findOne({ email });
+
   user.speciality.push({
     name: speciality,
     Year,
@@ -48,7 +38,7 @@ const CreateAdmin = async (req, res) => {
     Group: "main",
   });
 
-  if (!updatedUser || !newSchedule)
+  if (!newSchedule)
     return res.status(409).json({ err: "Failled creating Speciality" });
 
   return res.status(201).json({ msg: "Speciality Created" });

@@ -5,13 +5,6 @@ const Schedule = require("../Models/Schedule");
 const CreateAdmin = async (req, res) => {
   const { speciality, Year } = req.body;
 
-  const arrayOfEmptyDays = Array.from({ length: 36 }, (_, i) => ({
-    Classname: " ",
-    Type: " ",
-    Classroom: " ",
-    dayID: i,
-  }));
-
   const existSchedule = await Schedule.findOne({
     Year,
     Speciality: speciality,
@@ -19,6 +12,13 @@ const CreateAdmin = async (req, res) => {
   });
   if (existSchedule)
     return res.status(409).json({ err: "Speciality already exist" });
+
+  const arrayOfEmptyDays = Array.from({ length: 36 }, (_, i) => ({
+    Classname: " ",
+    Type: " ",
+    Classroom: " ",
+    dayID: i,
+  }));
 
   const newSchedule = await Schedule.create({
     Days: arrayOfEmptyDays,
@@ -44,18 +44,7 @@ const CreateAdmin = async (req, res) => {
   if (!updatedUser || !newSchedule)
     return res.status(409).json({ err: "Failled creating Speciality" });
 
-  const user = await User.findOne({ email }).select("-_id -password -__v");
-  return res.status(201).json({
-    speciality: user.speciality,
-    token: jwt.sign(
-      {
-        username: user.username,
-        email,
-        speciality: user.speciality,
-      },
-      process.env.SECRET
-    ),
-  });
+  return res.status(201).json({ msg: "Speciality Created" });
 };
 
 const ChangeChannel = async (req, res) => {

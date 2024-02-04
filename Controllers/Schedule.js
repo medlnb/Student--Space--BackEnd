@@ -92,11 +92,11 @@ const ChangeScheduleParams = async (req, res) => {
 
   const updateParams = {};
 
-  if (ClassRooms) {
+  if (ClassRooms !== "") {
     updateParams.$push = { ClassRooms };
   }
 
-  if (ClassTypes) {
+  if (ClassTypes !== "") {
     if (!updateParams.$push) {
       updateParams.$push = {};
     }

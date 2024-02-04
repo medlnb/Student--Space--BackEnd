@@ -105,7 +105,7 @@ const ChangeScheduleParams = async (req, res) => {
 
   const newSchedule = await Schedule.updateMany(
     { Speciality, Year },
-    updateParams
+    ...updateParams
   );
 
   if (!newSchedule)

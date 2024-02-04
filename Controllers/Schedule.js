@@ -114,10 +114,30 @@ const ChangeScheduleParams = async (req, res) => {
   return res.status(201).json({ message: "Parameters patched successfully" });
 };
 
+const GetParams = async (req, res) => {
+  const { tableinfo } = req.params;
+
+  const Group = tableinfo.substring(1);
+  const specIndex = tableinfo[0];
+  const spec = req.user.speciality[specIndex];
+  const Speciality = spec.name;
+  const Year = spec.Year;
+  const schedule = await Schedule.findOne({ Speciality, Year, Group });
+
+  if (!schedule)
+    return res
+      .status(404)
+      .json({ message: "Error getting the schedule params" });
+
+  return res
+    .status(201)
+    .json({ ClassRooms: schedule.ClassRooms, ClassTypes: schedule.ClassTypes });
+};
 module.exports = {
   GetSchedule,
   createSchedule,
   updateSchedule,
   GetGroupsSchedules,
   ChangeScheduleParams,
+  GetParams,
 };

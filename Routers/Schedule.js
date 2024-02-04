@@ -5,11 +5,13 @@ const {
   updateSchedule,
   GetGroupsSchedules,
   ChangeScheduleParams,
+  GetParams,
 } = require("../Controllers/Schedule");
 
 const router = express.Router();
 
 router.get("/:tableinfo", GetSchedule);
+router.get("/GetParams/:tableinfo", GetParams);
 router.get("/groups/:tableinfo", GetGroupsSchedules);
 router.post("/:tableinfo", createSchedule);
 router.patch("/:tableinfo", updateSchedule);

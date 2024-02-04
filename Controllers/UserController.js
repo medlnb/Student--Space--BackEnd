@@ -73,21 +73,19 @@ const ChangeChannel = async (req, res) => {
 
 const AddTeacher = async (req, res) => {
   const { email, Module } = req.body;
-  const authorization = req.user;
+  const { speciality } = req.user;
   const { specIndex } = req.params;
-  const speciality = authorization.speciality[specIndex];
-  const updatedUser = await User.updateOne(
-    { email },
-    {
-      $push: {
-        speciality: {
-          name: speciality.name,
-          Year: speciality.Year,
-          Module,
-        },
-      },
-    }
-  );
+  const { name, Year } = speciality[specIndex];
+
+  const user = await User.findOne({ email });
+  user.speciality.push({
+    name,
+    Year,
+    Module,
+  });
+
+  const updatedUser = await user.save();
+
   if (!updatedUser)
     return res.status(409).json({ err: "Failled Adding Teacher" });
   return res.status(200).json({ email });
@@ -197,7 +195,6 @@ const GetVersion = async (req, res) => {
     ),
   });
 };
-
 
 module.exports = {
   login,

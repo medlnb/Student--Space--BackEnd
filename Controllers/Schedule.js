@@ -85,18 +85,18 @@ const createSchedule = async (req, res) => {
 const ChangeScheduleParams = async (req, res) => {
   const { speciality } = req.user;
   const { specIndex } = req.params;
-  const Speciality = speciality[specIndex];
-  const Year = speciality[specIndex];
+  const {Speciality} = speciality[specIndex];
+  const {Year} = speciality[specIndex];
 
   const { ClassRooms, ClassTypes } = req.body;
 
   const updateParams = {};
 
-  if (ClassRooms !== "") {
+  if (ClassRooms) {
     updateParams.$push = { ClassRooms };
   }
 
-  if (ClassTypes !== "") {
+  if (ClassTypes) {
     if (!updateParams.$push) {
       updateParams.$push = {};
     }
@@ -105,7 +105,7 @@ const ChangeScheduleParams = async (req, res) => {
 
   const newSchedule = await Schedule.updateMany(
     { Speciality, Year },
-    ...updateParams
+    updateParams
   );
 
   if (!newSchedule)
@@ -125,13 +125,9 @@ const GetParams = async (req, res) => {
   const schedule = await Schedule.findOne({ Speciality, Year, Group });
 
   if (!schedule)
-    return res
-      .status(404)
-      .json({ message: "Error getting the schedule params" });
+    return res.status(404).json({ message: "Error getting the schedule parameters" });
 
-  return res
-    .status(201)
-    .json({ ClassRooms: schedule.ClassRooms, ClassTypes: schedule.ClassTypes });
+  return res.status(201).json({ClassRooms:schedule.ClassRooms,ClassTypes:schedule.ClassTypes});
 };
 module.exports = {
   GetSchedule,

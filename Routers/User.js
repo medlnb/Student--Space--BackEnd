@@ -8,7 +8,7 @@ const {
   getUsers,
   AddTeacher,
   ChangeChannel,
-  GetVersion
+  GetVersion,
 } = require("../Controllers/UserController");
 
 const router = express.Router();
@@ -19,8 +19,8 @@ router.post("/create", createUser);
 router.use(RequireAuth);
 router.get("/version", GetVersion);
 router.get("/specs", GetSpecs);
-router.patch("/admin", CreateAdmin);
 router.get("/users/:specIndex", getUsers);
+router.patch("/admin", CreateAdmin);
 router.patch("/teacher/:specIndex", AddTeacher);
 router.patch("/channel/:specIndex", ChangeChannel);
 

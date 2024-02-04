@@ -38,6 +38,14 @@ const ScheduleSchema = new Schema({
     type: String,
     required: true,
   },
+  ClassTypes: {
+    type: [String],
+    required: true,
+  },
+  ClassRooms: {
+    type: [String],
+    required: true,
+  },
 });
 
 module.exports = mongoose.model("Schedule", ScheduleSchema);

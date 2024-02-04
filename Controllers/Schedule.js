@@ -21,7 +21,7 @@ const GetGroupsSchedules = async (req, res) => {
   const spec = req.user.speciality[specIndex];
   const Speciality = spec.name;
   const Year = spec.Year;
-  
+
   const schedule = await Schedule.find({ Speciality, Year });
 
   if (!schedule)
@@ -72,6 +72,8 @@ const createSchedule = async (req, res) => {
     Speciality,
     Year,
     Group,
+    ClassRooms: [],
+    ClassTypes: [],
   });
 
   if (!newSchedule)
@@ -80,9 +82,42 @@ const createSchedule = async (req, res) => {
   return res.status(201).json({ message: "newSchedule created" });
 };
 
+const ChangeScheduleParams = async (req, res) => {
+  const { speciality } = req.user;
+  const { specIndex } = req.params;
+  const Speciality = speciality[specIndex];
+  const Year = speciality[specIndex];
+
+  const { ClassRooms, ClassTypes } = req.body;
+
+  const updateParams = {};
+
+  if (ClassRooms) {
+    updateParams.$push = { ClassRooms };
+  }
+
+  if (ClassTypes) {
+    if (!updateParams.$push) {
+      updateParams.$push = {};
+    }
+    updateParams.$push.ClassTypes = ClassTypes;
+  }
+
+  const newSchedule = await Schedule.updateMany(
+    { Speciality, Year },
+    updateParams
+  );
+
+  if (!newSchedule)
+    return res.status(400).json({ message: "Error adding new parameters" });
+
+  return res.status(201).json({ message: "Parameters patched successfully" });
+};
+
 module.exports = {
   GetSchedule,
   createSchedule,
   updateSchedule,
   GetGroupsSchedules,
+  ChangeScheduleParams,
 };
